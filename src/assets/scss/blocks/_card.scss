@@ -1,0 +1,16 @@
+.card {
+    $b: &;
+
+    &__body {
+        background-color: purple;
+        padding: 1rem;
+    }
+
+    &__heading {
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+    }
+
+
+}

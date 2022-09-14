@@ -1,0 +1,18 @@
+.grid {
+
+    --grid-column-count: 12;
+    --grid-column-gap: 0;
+    --grid-row-gap: clamp(1.5rem, calc(1.29rem + 0.89vw), 2rem);
+
+    --grid-columns: [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end];
+
+    @include at(lg) {
+        --grid-column-gap: 2.5rem;
+    }
+
+    display: grid;
+    column-gap: var(--grid-column-gap, 2.5rem);
+    grid-template-columns: var(--grid-custom-columns, var(--grid-columns));
+    grid-template-rows: auto;
+    row-gap: var( --grid-row-gap);
+}

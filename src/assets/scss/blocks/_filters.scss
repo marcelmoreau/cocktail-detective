@@ -1,0 +1,40 @@
+.filters {
+    $b: &;
+
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    padding: 2rem 0;
+
+    &__item {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__listItem {
+        flex: 0 0 auto;
+    }
+
+    &__check {
+        clip: rect(0,0,0,0);
+        pointer-events: none;
+        position: absolute;
+    }
+
+    &__label {
+        background-color: $color-picton;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        display: block;
+        font-size: 0.875rem;
+        margin-bottom: 0;
+        padding: 0.75em 0.5em;
+        transition: 150ms ease-in-out background-color;
+    }
+
+    &__label:hover {
+        background-color: adjust-color($color-picton, $lightness: -10%);
+    }
+
+}

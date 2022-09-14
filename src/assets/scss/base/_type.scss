@@ -1,0 +1,27 @@
+.heading {
+    font-family: var(--font-family-accent);
+}
+
+
+a {
+    color: $link;
+    text-decoration: underline;
+    text-decoration-color: scale-color($link, $blackness: 64%);
+    text-decoration-thickness: 0.075em;
+    text-underline-offset: 0.225em;
+    transition: color 100ms cubic-bezier(.17,.67,.85,.61);
+
+    &:hover {
+        color: $link-hover;
+        text-decoration-color: scale-color($link-hover, $blackness: 64%);
+    }
+}
+
+
+h1 {
+    font-size: clamp(1.25rem, calc(1.59vw + 0.6rem), 2.5rem);
+}
+
+h2 {
+    font-size: clamp(1.25rem, calc(1.59vw + 0.6rem), 2rem);
+}

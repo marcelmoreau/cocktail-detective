@@ -1,0 +1,32 @@
+:root {
+    --font-family-sans-serif: #{$font-family-sans-serif};
+    --font-family-accent: #{$font-family-accent};
+
+    --color-gray-600: #{$color-gray-600};
+    --color-gray-800: #{$color-gray-800};
+
+    --color-daisy: #{$color-daisy};
+    --color-maire-500: #{$color-body};
+    --color-picton: #{$color-picton};
+    --color-romance: #{$color-romance};
+
+    --body-font-weight: #{$body-font-weight};
+    --body-line-height: #{$body-line-height};
+
+    --heading-font-family: #{$heading-font-family};
+    --heading-font-weight: #{$heading-font-weight};
+    --heading-line-height: #{$heading-line-height};
+
+    --container-max-width: #{$container-max-width};
+    --container-padding-x: #{$container-padding-x};
+
+    --grid-gutter: #{$grid-gutter};
+
+    --font-size-sm: clamp(0.8rem, -0.09vw + 0.82rem, 0.75rem);
+    --font-size-base: clamp(1rem, 0vw + 1rem, 1rem);
+    --font-size-md: clamp(1.25rem, 0.15vw + 1.21rem, 1.33rem);
+    --font-size-lg: clamp(1.56rem, 0.39vw + 1.47rem, 1.78rem);
+    --font-size-xl: clamp(1.95rem, 0.76vw + 1.76rem, 2.37rem);
+    --font-size-xxl: clamp(2.44rem, 1.3vw + 2.12rem, 3.16rem);
+    --font-size-xxxl: clamp(3.05rem, 2.1vw + 2.53rem, 4.21rem);
+}
