@@ -1,6 +1,8 @@
 <script setup>
-    import ListingCard from './ListingCard.vue'
     import { ref, watch, watchEffect, reactive } from 'vue'
+
+    import CocktailCard from './CocktailCard.vue'
+
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v1/`
     const API_KEY = 1
@@ -16,19 +18,32 @@
     // const picked = ref(data.selectedIngredients)
 
 
-    async function callbackk() {
+    async function filterByIngredient() {
         data.cocktails = null
-        console.log('zz2')
-        const res = await fetch(
-            `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${data.picked}`
-        )
-        data.cocktails = await res.json();
+        try {
+            const res = await fetch(
+                `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${data.picked}`
+            )
+            data.cocktails = await res.json()
+        } catch(err) {
+            console.log('error', err)
+        }
     }
 
 
     watch(
-        () => data.picked, callbackk
+        () => data.picked, filterByIngredient
     )
+
+
+    // Lookup full cocktail details by id
+    // www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
+
+    // watchEffect(async () => {
+    //     const url = `${API_URL}${currentBranch.value}`
+    //     commits.value = await (await fetch(url)).json()
+    // })
+
 
     async function getIngredients() {
         try {
@@ -40,18 +55,6 @@
             console.log('error', err)
         }
     }
-
-    // async function filterByIngredient(item) {
-    //     try {
-    //         const res = await fetch(
-    //             `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${item}`
-    //         )
-    //         data.ingredients = await res.json()
-    //     } catch(err) {
-    //         console.log('errorz', err)
-    //     }
-    // }
-
 
     getIngredients()
 
@@ -66,20 +69,19 @@
                     v-for="(ingredient, index) in data.ingredients.drinks"
                     class="filters__item"
                 >
-                <input
-                    :id="`filters__item--${index}`"
-                    :value="ingredient.strIngredient1"
-                    v-model="data.picked"
-                    class="filters__check"
-                    type="checkbox"
-                >
-                <label
-                    :for="`filters__item--${index}`"
-                    class="filters__label"
-                >
-                    {{ ingredient.strIngredient1 }}
-                </label>
-
+                    <input
+                        :id="`filters__item--${index}`"
+                        :value="ingredient.strIngredient1"
+                        v-model="data.picked"
+                        class="filters__check"
+                        type="radio"
+                    >
+                    <label
+                        :for="`filters__item--${index}`"
+                        class="filters__label"
+                    >
+                        {{ ingredient.strIngredient1 }}
+                    </label>
                 </div>
             </div>
 
@@ -90,21 +92,17 @@
                     </h1>
                     <div class="listing__wrapper">
                         <div v-if="!data.cocktails">
-                            damn
+                            no cocktails found
                         </div>
                         <ul v-else class="listing__list">
                             <li
                                 v-for="cocktail in data.cocktails.drinks"
-
                                 class="listing__listItem"
                             >
-                                <div class="card">
-                                    <div class="card__body">
-                                        <div class="card__header">
-                                            {{ cocktail.strDrink }}
-                                        </div>
-                                    </div>
-                                </div>
+                                <CocktailCard
+                                    :title="cocktail.strDrink"
+                                    :id="cocktail.idDrink"
+                                />
                             </li>
                         </ul>
 

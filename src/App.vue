@@ -1,6 +1,5 @@
 <script setup>
     import { RouterLink, RouterView } from 'vue-router'
-    import HelloWorld from './components/HelloWorld.vue'
     import TheMasthead from './components/TheMasthead.vue'
     import CocktailListing from './components/CocktailListing.vue';
 </script>
