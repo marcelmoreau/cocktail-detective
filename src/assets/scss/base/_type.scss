@@ -1,7 +1,11 @@
 .heading {
-    font-family: var(--font-family-accent);
-}
+    @extend %heading;
 
+    &--accent {
+        background-color: var(--color-daisy);
+        display: inline-block;
+    }
+}
 
 a {
     color: $link;

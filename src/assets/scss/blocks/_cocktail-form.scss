@@ -1,0 +1,27 @@
+.cocktail-form {
+    $b: &;
+
+    @extend %grid;
+
+    margin-top: var(--space-xl);
+
+    &__wrapper {
+        grid-column: main;
+
+        @include at(md) {
+            grid-column: 3 / span 10;
+        }
+
+        @include at(lg) {
+            grid-column: 4 / span 8;
+        }
+    }
+
+    &__label {
+        @extend %heading-accent;
+
+        display: inline-block;
+        font-size: var(--step-2);
+        text-align: center;
+    }
+}

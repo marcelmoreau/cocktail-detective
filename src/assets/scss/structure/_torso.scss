@@ -1,19 +1,19 @@
 .torso {
     $b: &;
 
-    &__wrapper {
-        align-items: flex-start;
-        display: flex;
-        justify-content: space-between;
-    }
+    // &__wrapper {
+    //     align-items: flex-start;
+    //     display: flex;
+    //     justify-content: space-between;
+    // }
 
-    &__filters {
-        flex: 0 0 auto;
-        width: 30%;
-    }
+    // &__filters {
+    //     flex: 0 0 auto;
+    //     width: 30%;
+    // }
 
-    &__listing {
-        flex: 0 0 auto;
-        width: 65%;
-    }
+    // &__listing {
+    //     flex: 0 0 auto;
+    //     width: 65%;
+    // }
 }

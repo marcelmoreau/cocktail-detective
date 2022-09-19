@@ -1,33 +1,64 @@
+/**
+* variables
+*/
+
+
+// grayscale
+
 $color-white: #FFF;
+$color-gray-400: #A9A9A9;
 $color-gray-600: #8F8F8F;
 $color-gray-800: #151515;
 
+// color
+
 $color-daisy: #EABA34;
-$color-body: $color-gray-800;
-$color-picton: #82A7CA;
-$color-romance: #F6F1EB;
+$color-royal-blue: #5386E4;
+$color-russian-green: #629460;
+$color-cadet-crayola: #ADB6C4;
 $color-mariner: #3C5DA3;
+$color-english-red: #A54657;
+$color-paradise-pink: #F0386B;
 
-$body-font-weight: 300;
-$body-line-height: 1.4;
 
-$link: $color-picton;
-$link-hover: $color-daisy;
+// theme
+$color-error: $color-english-red;
+$color-info: $color-cadet-crayola;
+$color-success: $color-russian-green;
 
-$font-family-sans-serif: "Inter", sans-serif;
-$font-family-accent: "Josefin Sans", Georgia, serif;
 
-$heading-font-family: $font-family-accent;
-$heading-font-weight: 600;
-$heading-line-height: 1.25;
+// space
 
-$container-max-width: 1216px;
-$container-padding-x: 1.25rem;
-$grid-gutter: $container-padding-x * 2;
+$grid-gutter-sm: 1.25rem;
+$grid-gutter-lg: 2rem;
+
+
+// breakpoints
 
 $breakpoints: (
     sm: 576px,
     md: 768px,
     lg: 1000px,
     xl: 1200px,
+    xxl: 1460px
 );
+
+
+// body
+
+$color-body: $color-gray-800;
+$body-font-weight: 300;
+$body-line-height: 1.4;
+
+
+// type
+
+$font-family-sans-serif: "Inter", sans-serif;
+$font-family-accent: "Josefin Sans", Georgia, serif;
+
+$heading-font-family: $font-family-accent;
+$heading-font-weight: 400;
+$heading-line-height: 1.25;
+
+$link: $color-royal-blue;
+$link-hover: $color-mariner;

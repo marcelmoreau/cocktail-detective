@@ -1,11 +1,7 @@
 .brand {
     $b: &;
 
-    --brand-font-size: var(--font-size-md);
-
-    @include at(sm) {
-        --brand-font-size: var(--font-size-lg);
-    }
+    --brand-font-size: var(--step-2);
 
     font-family: $font-family-accent;
     font-size: var(--brand-font-size);
@@ -15,10 +11,10 @@
         align-items: center;
         display: flex;
         justify-content: center;
-        padding-bottom: 0.75em;
-        padding-left: 1em;
-        padding-right: 1em;
-        padding-top: 1em;
+        padding-bottom: 0.5em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        padding-top: 0.75em;
     }
 
     &__copy {
@@ -26,8 +22,8 @@
     }
 
     &__visual {
-        margin-left: 1rem;
-        margin-right: 1rem;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
     }
 
     &__icon {
@@ -37,9 +33,25 @@
         width: 1.25em;
     }
 
+    &__iconGlass {
+        fill: var(--color-white);
+    }
+
+    &__iconOlive {
+        fill: var(--color-body);
+    }
+
+    &__iconLiquid {
+        fill: var(--color-daisy);
+    }
+
+    &__iconReflection {
+        fill: var(--color-gray-400);
+    }
+
     &--dark {
-        background-color: $color-gray-800;
-        color: $color-white;
+        background-color: var(--color-gray-800);
+        color: var(--color-white);
     }
 
 }

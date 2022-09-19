@@ -2,15 +2,87 @@
     $b: &;
 
     &__body {
-        background-color: purple;
-        padding: 1rem;
+        background-color: var(--color-white);
+        height: 100%;
+    }
+
+    &__wrapper {
+        @extend %grid;
+
+        --grid-column-count: 6;
+        --grid-row-gap: 0;
+        grid-template-columns: var(--grid-columns-main);
+        height: 100%;
+    }
+
+    &__media {
+        @extend %grid;
+
+        --grid-column-count: 6;
+        --grid-row-gap: 0;
+
+        align-items: center;
+        background-image: linear-gradient(to top, var(--color-paradise-pink), var(--color-royal-blue));
+        grid-column: main;
+        grid-template-columns: var(--grid-columns-main);
+
+        @include at(sm) {
+            --grid-column-count: 1;
+
+            grid-column: main-start / span 2;
+        }
+    }
+
+    &__image {
+        grid-column: 2 / span 4;
+        mix-blend-mode: multiply;
+
+        @include at(sm) {
+            grid-column: 1 / -1;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.25rem;
+        grid-column: main;
+        padding-bottom: var(--space-m);
+        padding-left: var(--space-m);
+        padding-right: var(--space-m);
+        padding-top: var(--space-m);
+
+        @include at(sm) {
+            grid-column: auto / span 4;
+            padding-left: 0;
+        }
+    }
+
+    &__header {
     }
 
     &__heading {
-        font-size: 1.25rem;
-        font-weight: 400;
-        margin-bottom: 0.5rem;
+        @extend %heading;
+
+        font-size: 1.5rem;
     }
 
+    &__torso {
+        display: grid;
+        gap: 1.25rem;
+    }
 
+    &__subheading {
+        @extend %heading;
+
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.325rem;
+        text-transform: uppercase;
+    }
+
+    &__list {
+        display: grid;
+        row-gap: 0.325rem;
+    }
 }

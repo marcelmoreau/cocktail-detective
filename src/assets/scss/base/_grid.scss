@@ -1,18 +1,21 @@
-.grid {
-
+%grid {
     --grid-column-count: 12;
-    --grid-column-gap: 0;
-    --grid-row-gap: clamp(1.5rem, calc(1.29rem + 0.89vw), 2rem);
-
-    --grid-columns: [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end];
-
-    @include at(lg) {
-        --grid-column-gap: 2.5rem;
-    }
+    --grid-column-gap: var(--grid-gutter-sm);
+    --grid-row-gap: var(--grid-gutter-sm);
+    --grid-edge: var(--grid-gutter-sm);
+    --grid-columns-full: [full-start] var(--grid-edge) [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end] var(--grid-edge) [full-end];
+    --grid-columns-main: [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end];
 
     display: grid;
-    column-gap: var(--grid-column-gap, 2.5rem);
-    grid-template-columns: var(--grid-custom-columns, var(--grid-columns));
+    column-gap: var(--grid-column-gap, 2rem);
+    grid-template-columns: var(--grid-custom-columns, var(--grid-columns-full));
     grid-template-rows: auto;
-    row-gap: var( --grid-row-gap);
+    row-gap: var(--grid-row-gap, 2rem);
+
+
+    @include at(lg) {
+        --grid-column-gap: var(--grid-gutter-lg);
+        --grid-row-gap: var(--grid-gutter-lg);
+        --grid-edge: var(--grid-gutter-lg);
+    }
 }

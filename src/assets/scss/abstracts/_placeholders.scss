@@ -4,3 +4,9 @@
     line-height: var(--heading-line-height);
     margin-top: 0;
 }
+
+%heading-accent {
+    background-color: var(--color-daisy);
+    display: inline-block;
+    padding: 0.5em 1em 0.325em;
+}

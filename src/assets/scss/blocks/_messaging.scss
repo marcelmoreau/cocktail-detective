@@ -1,0 +1,31 @@
+.messaging {
+    $b: &;
+
+    &__body {
+        border: 0.125rem solid;
+        border-radius: 0.25rem;
+        padding: 1rem;
+    }
+
+    &--error {
+        #{$b}__body {
+            background-color: mix($color-white, $color-error, 40%);
+            border-color: var(--color-error);
+        }
+    }
+
+    &--info {
+        #{$b}__body {
+            background-color: mix($color-white, $color-info, 40%);
+            border-color: var(--color-info);
+        }
+    }
+
+    &--success {
+        #{$b}__body {
+            background-color: mix($color-white, $color-success, 40%);
+            border-color: var(--color-success);
+        }
+    }
+}
+

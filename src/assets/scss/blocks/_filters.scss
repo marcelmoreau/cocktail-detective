@@ -23,7 +23,7 @@
     }
 
     &__label {
-        background-color: $color-picton;
+        background-color: $color-royal-blue;
         border-radius: 0.25rem;
         cursor: pointer;
         display: block;
@@ -34,7 +34,7 @@
     }
 
     &__label:hover {
-        background-color: adjust-color($color-picton, $lightness: -10%);
+        background-color: adjust-color($color-royal-blue, $lightness: -10%);
     }
 
 }

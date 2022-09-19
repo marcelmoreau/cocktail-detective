@@ -15,25 +15,25 @@
         picked: []
     })
 
-    // const picked = ref(data.selectedIngredients)
+    // // const picked = ref(data.selectedIngredients)
 
 
-    async function filterByIngredient() {
-        data.cocktails = null
-        try {
-            const res = await fetch(
-                `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${data.picked}`
-            )
-            data.cocktails = await res.json()
-        } catch(err) {
-            console.log('error', err)
-        }
-    }
+    // async function filterByIngredient() {
+    //     data.cocktails = null
+    //     try {
+    //         const res = await fetch(
+    //             `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${data.picked}`
+    //         )
+    //         data.cocktails = await res.json()
+    //     } catch(err) {
+    //         console.log('error', err)
+    //     }
+    // }
 
 
-    watch(
-        () => data.picked, filterByIngredient
-    )
+    // watch(
+    //     () => data.picked, filterByIngredient
+    // )
 
 
     // Lookup full cocktail details by id
@@ -45,43 +45,57 @@
     // })
 
 
-    async function getIngredients() {
-        try {
-            const res = await fetch(
-                `${API_URL}/${API_KEY}/list.php?i=list`
-            )
-            data.ingredients = await res.json()
-        } catch(err) {
-            console.log('error', err)
-        }
-    }
+    // async function getIngredients() {
+    //     try {
+    //         const res = await fetch(
+    //             `${API_URL}/${API_KEY}/list.php?i=list`
+    //         )
+    //         data.ingredients = await res.json()
+    //     } catch(err) {
+    //         console.log('error', err)
+    //     }
+    // }
 
-    getIngredients()
+    // getIngredients()
 
 </script>
 
 <template>
+    <div class="cocktail-listing">
+        <div class="cocktail-listing__wrapper">
 
-    <div class="torso">
-        <div class="torso__wrapper">
-            <div class="filters torso__filters">
-                <div
-                    v-for="(ingredient, index) in data.ingredients.drinks"
-                    class="filters__item"
-                >
-                    <input
-                        :id="`filters__item--${index}`"
-                        :value="ingredient.strIngredient1"
-                        v-model="data.picked"
-                        class="filters__check"
-                        type="radio"
-                    >
-                    <label
-                        :for="`filters__item--${index}`"
-                        class="filters__label"
-                    >
-                        {{ ingredient.strIngredient1 }}
-                    </label>
+            <div class="cards">
+                <div class="cards__wrapper">
+                    <div class="cards__item">
+                        <CocktailCard
+                            class="cards__card"
+                            title="Hello world lorem ipsum doalr mangahttn and then last call amat"
+                        />
+                    </div>
+                    <div class="cards__item">
+                        <CocktailCard
+                            class="cards__card"
+                            title="Hello world"
+                        />
+                    </div>
+                    <div class="cards__item">
+                        <CocktailCard
+                            class="cards__card"
+                            title="Hello world"
+                        />
+                    </div>
+                    <div class="cards__item">
+                        <CocktailCard
+                            class="cards__card"
+                            title="Hello world"
+                        />
+                    </div>
+                    <div class="cards__item">
+                        <CocktailCard
+                            class="cards__card"
+                            title="Hello world"
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -91,18 +105,17 @@
                         Results…
                     </h1>
                     <div class="listing__wrapper">
-                        <div v-if="!data.cocktails">
+                        <div>
                             no cocktails found
                         </div>
-                        <ul v-else class="listing__list">
+                        <ul class="listing__list">
                             <li
-                                v-for="cocktail in data.cocktails.drinks"
                                 class="listing__listItem"
                             >
                                 <CocktailCard
-                                    :title="cocktail.strDrink"
-                                    :id="cocktail.idDrink"
+                                    title="Hello world"
                                 />
+
                             </li>
                         </ul>
 
@@ -111,5 +124,4 @@
             </div>
         </div>
     </div>
-
 </template>
