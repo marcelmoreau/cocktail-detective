@@ -3,6 +3,7 @@
     --font-family-accent: #{$font-family-accent};
 
     --color-white: #{$color-white};
+    --color-gray-200: #{$color-gray-200};
     --color-gray-400: #{$color-gray-400};
     --color-gray-600: #{$color-gray-600};
     --color-gray-800: #{$color-gray-800};
@@ -13,11 +14,13 @@
     --color-cadet-crayola: #{$color-cadet-crayola};
     --color-royal-blue: #{$color-royal-blue};
     --color-paradise-pink: #{$color-paradise-pink};
+    --color-english-red: #{$color-english-red};
 
     --color-error: #{$color-error};
     --color-info: #{$color-info};
     --color-success: #{$color-success};
 
+    --body-color: var(--color-gray-800);
     --body-font-weight: #{$body-font-weight};
     --body-line-height: #{$body-line-height};
 
@@ -32,7 +35,6 @@
     --font-size-xl: clamp(1.95rem, 0.76vw + 1.76rem, 2.37rem);
     --font-size-xxl: clamp(2.44rem, 1.3vw + 2.12rem, 3.16rem);
     --font-size-xxxl: clamp(3.05rem, 2.1vw + 2.53rem, 4.21rem);
-
 
 
     // font-sizes

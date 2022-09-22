@@ -1,0 +1,92 @@
+.the-form {
+    $b: &;
+
+    --ms-font-size: 1rem;
+    --ms-line-height: var(--body-line-height);
+    --ms-bg: var(--color-white);
+    --ms-bg-disabled: var(--color-gray-200);
+    --ms-border-color: #CB9B15;
+    --ms-border-width: 0.175rem;
+    --ms-radius: 0.25rem;
+    --ms-py: 0.75em;
+    --ms-px: 0.5em;
+    --ms-ring-width: 3px;
+    --ms-ring-color: #DEA917;
+    --ms-placeholder-color: #9CA3AF;
+    --ms-max-height: 10rem;
+
+    --ms-spinner-color: #10B981;
+    --ms-caret-color: var(--body-color);
+    --ms-clear-color: var(--color-english-red);
+    --ms-clear-color-hover: var(--body-color);
+
+    --ms-tag-font-size: 1rem;
+    --ms-tag-line-height: 1.25;
+    --ms-tag-font-weight: 600;
+    --ms-tag-bg: var(--color-daisy);
+    --ms-tag-bg-disabled: var(--color-gray-200);
+    --ms-tag-color: var(--body-color);
+    --ms-tag-color-disabled: var(--body-color);
+    --ms-tag-radius: 0.25rem;
+    --ms-tag-py: 0.25em;
+    --ms-tag-px: 0.5em;
+    --ms-tag-my: 0.25em;
+    --ms-tag-mx: 0.5em;
+
+    --ms-tag-remove-radius: 0.125rem;
+    --ms-tag-remove-py: 0.25em;
+    --ms-tag-remove-px: 0.25em;
+    --ms-tag-remove-my: 0;
+    --ms-tag-remove-mx: 0.25em;
+
+    --ms-dropdown-bg: var(--color-white);
+    --ms-dropdown-border-color: var(--color-gray-200);
+    --ms-dropdown-border-width: 1px;
+    --ms-dropdown-radius: 0;
+
+    --ms-option-font-size: 1rem;
+    --ms-option-line-height: 1.375;
+    --ms-option-bg-pointed: #FFFFFF;
+    --ms-option-color-pointed: #1F2937;
+    --ms-option-bg-selected: var(--color-russian-green);
+    --ms-option-color-selected: #FFFFFF;
+    --ms-option-bg-disabled: #FFFFFF;
+    --ms-option-color-disabled: #D1D5DB;
+    --ms-option-bg-selected-pointed: purple;
+    --ms-option-color-selected-pointed: #FFFFFF;
+    --ms-option-bg-selected-disabled: #FFFFFF;
+    --ms-option-color-selected-disabled: #D1FAE5;
+    --ms-option-py: 0.5rem;
+    --ms-option-px: 0.75rem;
+
+    --ms-empty-color: #4B5563;
+
+
+    @extend %grid;
+
+    margin-top: var(--space-xl);
+
+    &__wrapper {
+        grid-column: main;
+
+        @include at(md) {
+            grid-column: 3 / span 10;
+        }
+
+        @include at(lg) {
+            grid-column: 4 / span 8;
+        }
+    }
+
+    &__labelWrapper {
+        text-align: center;
+    }
+
+    &__label {
+        @extend %heading-accent;
+
+        display: inline-block;
+        font-size: var(--step-2);
+        text-align: center;
+    }
+}

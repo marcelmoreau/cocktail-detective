@@ -1,5 +1,10 @@
-.cards {
+.the-results {
     $b: &;
+
+    --grid-edge: 0;
+    @extend %grid;
+
+    margin-top: var(--space-xl);
 
     &__wrapper {
         @extend %grid;
@@ -8,7 +13,14 @@
         grid-column: main;
     }
 
-    &__item {
+    &__list {
+        @extend %grid;
+
+        grid-template-columns: var(--grid-columns-main);
+        grid-column: main;
+    }
+
+    &__listItem {
         grid-column: main;
 
         @include at(lg) {
@@ -23,4 +35,7 @@
     &__card {
         height: 100%;
     }
+
+
+
 }

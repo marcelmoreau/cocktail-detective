@@ -1,57 +1,7 @@
 .form {
     $b: &;
 
-
-    &__field {
-        &--center {
-            text-align: center;
-        }
-    }
-
     &__label {
         @extend %heading;
     }
-
-    &__control {
-        appearance: none;
-        background-color: var(--color-white);
-        border: 0.125rem solid var(--gray-400);
-        border-radius: 0.25rem;
-        color: var(--color-body);
-        display: block;
-        font-family: var(--font-family-sans-serif);
-        font-size: var(--font-size-base);
-        grid-column: main;
-        line-height: var(--body-line-height);
-        padding: 0.5rem;
-        text-align: left;
-        width: 100%;
-
-        // &:focus {
-        //     border-color: $form-control-focus-border-color;
-        //     box-shadow: 0 0 0 $form-control-border-focus-width $form-control-focus-shadow-color;
-        //     outline: 0;
-        // }
-
-        &:disabled {
-            background-color: var(--color-gray-400);
-            border-color: var(--color-gray-800);
-            opacity: 1;
-        }
-
-        &--select {
-            // background-image: escape-svg($form-select-indicator);
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 16px 12px;
-
-            // Remove outline from select box in FF
-
-            &:-moz-focusring {
-                color: transparent;
-                text-shadow: 0 0 0 var(--color-body);
-            }
-        }
-    }
-
 }

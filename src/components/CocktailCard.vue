@@ -1,34 +1,5 @@
 <script setup>
-    import { ref, watch, watchEffect, reactive } from 'vue'
 
-    defineProps(['title', 'id'])
-
-
-    // const API_URL = `https://www.thecocktaildb.com/api/json/v1/`
-    // const API_KEY = 1
-
-    // const data = reactive({
-    //     cocktails: null,
-    //     ingredients: {},
-    //     filteredDrinks: {},
-    //     selectedIngredients: null,
-    //     picked: []
-    // })
-
-    // const picked = ref(data.selectedIngredients)
-
-
-    // async function filterByIngredient() {
-    //     data.cocktails = null
-    //     try {
-    //         const res = await fetch(
-    //             `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${data.picked}`
-    //         )
-    //         data.cocktails = await res.json()
-    //     } catch(err) {
-    //         console.log('error', err)
-    //     }
-    // }
 
 </script>
 
@@ -43,7 +14,7 @@
                 <div class="card__content">
                     <div class="card__header">
                         <div class="card__heading">
-                            {{ title }}
+                            Cocktail name
                         </div>
                     </div>
                     <div class="card__torso">
