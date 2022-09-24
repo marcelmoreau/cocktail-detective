@@ -9,37 +9,93 @@
 </script>
 
 <template>
-    <div class="the-results">
-        <div
-            v-if="this.isLoading"
-            class="the-results__wrapper"
-        >
-            <div>
-                <h1 class="heading">
-                    Loading…
-                </h1>
-            </div>
-        </div>
 
-        <ul
-            v-else
-            class="the-results__list"
-        >
-            <li
-                class="the-results__listItem"
-            >
-                <CocktailCard
+    <div
+        v-if="true"
+    >
 
-                />
-            </li>
-            <li
-                class="the-results__listItem"
-            >
-                <CocktailCard
-
-                />
-            </li>
-
-        </ul>
     </div>
+
+    <div
+        v-if="this.isLoading"
+    >
+        <div class="the-results">
+            <ul class="the-results__list">
+                <li class="the-results__listItem">
+                    <div class="skeleton">
+                        <div class="skeleton__wrapper">
+                            <div class="skeleton__media">
+                                <div class="skeleton__image skeleton__bone"></div>
+                            </div>
+                            <div class="skeleton__content">
+                                <div class="skeleton__bone skeleton__heading"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="the-results__listItem">
+                    <div class="skeleton">
+                        <div class="skeleton__wrapper">
+                            <div class="skeleton__media">
+                                <div class="skeleton__image skeleton__bone"></div>
+                            </div>
+                            <div class="skeleton__content">
+                                <div class="skeleton__bone skeleton__heading"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="the-results__listItem">
+                    <div class="skeleton">
+                        <div class="skeleton__wrapper">
+                            <div class="skeleton__media">
+                                <div class="skeleton__image skeleton__bone"></div>
+                            </div>
+                            <div class="skeleton__content">
+                                <div class="skeleton__bone skeleton__heading"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="the-results__listItem">
+                    <div class="skeleton">
+                        <div class="skeleton__wrapper">
+                            <div class="skeleton__media">
+                                <div class="skeleton__image skeleton__bone"></div>
+                            </div>
+                            <div class="skeleton__content">
+                                <div class="skeleton__bone skeleton__heading"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                                <div class="skeleton__bone skeleton__module"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div
+        v-else
+    >
+        <div class="the-results">
+            <ul class="the-results__list">
+                <li class="the-results__listItem">
+                    <CocktailCard
+                    />
+                </li>
+                <li class="the-results__listItem">
+                    <CocktailCard
+                    />
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </template>

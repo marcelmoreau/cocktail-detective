@@ -11,7 +11,7 @@
     --ms-py: 0.75em;
     --ms-px: 0.5em;
     --ms-ring-width: 3px;
-    --ms-ring-color: #DEA917;
+    --ms-ring-color: var(--color-daisy-600);
     --ms-placeholder-color: #9CA3AF;
     --ms-max-height: 10rem;
 
@@ -23,7 +23,7 @@
     --ms-tag-font-size: 1rem;
     --ms-tag-line-height: 1.25;
     --ms-tag-font-weight: 600;
-    --ms-tag-bg: var(--color-daisy);
+    --ms-tag-bg: var(--color-daisy-500);
     --ms-tag-bg-disabled: var(--color-gray-200);
     --ms-tag-color: var(--body-color);
     --ms-tag-color-disabled: var(--body-color);
