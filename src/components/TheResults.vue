@@ -6,6 +6,13 @@
         isLoading: Boolean,
         filteredDrinks: Array,
     })
+
+
+
+    // v-if="resources && !resources.length && !isLoading"
+    // nothing found
+
+
 </script>
 
 <template>
@@ -29,7 +36,7 @@
     </div>
 
     <div
-        v-else-if="this.isLoading"
+        v-else-if="this.isLoading && this.filteredDrinks.length"
     >
         <div class="the-results">
             <ul class="the-results__list">

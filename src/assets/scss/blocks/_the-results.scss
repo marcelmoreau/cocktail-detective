@@ -4,6 +4,7 @@
     --grid-edge: 0;
     @extend %grid;
 
+    margin-bottom: var(--space-xl);
     margin-top: var(--space-xl);
 
     &__wrapper {
