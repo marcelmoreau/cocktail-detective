@@ -10,10 +10,12 @@
         ingredientsPicked: null,
         isLoading: false,
         ingredientsOptions: [],
-        filteredDrinks: {},
+        filteredDrinks: [],
     });
 
-    function getIngredients() {
+
+    // populate ingredients in multiselect's options list
+    function populateIngredients() {
         fetch(`${API_URL}/${API_KEY}/list.php?i=list`)
             .then(response => response.json())
             .then(ingredients => {
@@ -21,10 +23,8 @@
             })
     }
 
-    getIngredients()
+    populateIngredients()
 
-
-    // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
 
 
     watch(
@@ -32,15 +32,15 @@
         (picked) => {
             // data.isLoading = true
 
-            let explode = picked.join(',')
+            let ingredients = picked.join(',')
 
-            fetch(`${API_URL}/${API_KEY}/filter.php?i=${explode}`)
-                .then(response => response.json())
-                .then(cocktails => {
-                    console.log(cocktails)
-                })
-
-            console.log(explode)
+            if (ingredients.length) {
+                fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
+                    .then(response => response.json())
+                    .then(cocktails => {
+                        data.filteredDrinks = cocktails.drinks
+                    })
+                }
         }
     )
 
@@ -54,6 +54,7 @@
         />
         <TheResults
             :isLoading="data.isLoading"
+            :filteredDrinks="data.filteredDrinks"
         />
     </div>
 </template>

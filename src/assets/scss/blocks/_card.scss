@@ -35,7 +35,6 @@
 
     &__image {
         grid-column: 2 / span 4;
-        mix-blend-mode: multiply;
 
         @include at(sm) {
             grid-column: 1 / -1;

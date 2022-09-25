@@ -1,5 +1,9 @@
 <script setup>
-
+    const props = defineProps({
+        name: String,
+        id: String,
+        image: String
+    })
 
 </script>
 
@@ -9,12 +13,12 @@
         <div class="card__body">
             <div class="card__wrapper">
                 <div class="card__media">
-                    <img class="card__image" src="https://picsum.photos/700/700" alt="">
+                    <img class="card__image" :src="image" alt="">
                 </div>
                 <div class="card__content">
                     <div class="card__header">
                         <div class="card__heading">
-                            Cocktail name
+                            {{ name }} {{ id }}
                         </div>
                     </div>
                     <div class="card__torso">
@@ -50,6 +54,5 @@
             </div>
         </div>
     </div>
-
 
 </template>

@@ -3,21 +3,33 @@
     import CocktailCard from '@/components/CocktailCard.vue'
 
     const props = defineProps({
-        isLoading: Boolean
+        isLoading: Boolean,
+        filteredDrinks: Array,
     })
-
 </script>
 
 <template>
-
     <div
-        v-if="true"
+        v-if="!this.isLoading && this.filteredDrinks.length"
     >
-
+        <div class="the-results">
+            <ul class="the-results__list">
+                <li
+                    v-for="cocktail in this.filteredDrinks"
+                    class="the-results__listItem"
+                >
+                    <CocktailCard
+                        :name="cocktail.strDrink"
+                        :image="cocktail.strDrinkThumb"
+                        :id="cocktail.idDrink"
+                    />
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div
-        v-if="this.isLoading"
+        v-else-if="this.isLoading"
     >
         <div class="the-results">
             <ul class="the-results__list">
@@ -84,18 +96,6 @@
     <div
         v-else
     >
-        <div class="the-results">
-            <ul class="the-results__list">
-                <li class="the-results__listItem">
-                    <CocktailCard
-                    />
-                </li>
-                <li class="the-results__listItem">
-                    <CocktailCard
-                    />
-                </li>
-            </ul>
-        </div>
+        else
     </div>
-
 </template>

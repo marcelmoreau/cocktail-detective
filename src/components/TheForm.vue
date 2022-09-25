@@ -1,6 +1,11 @@
 <script setup>
     import Multiselect from '@vueform/multiselect'
 
+    const multiselectClasses = {
+        option: 'multiselect-option the-form__option',
+        tagRemove: 'multiselect-tag-remove the-form__tagRemove'
+    }
+
     defineProps({
         ingredients: Array,
         modelValue: Array
@@ -27,7 +32,8 @@
                     :close-on-select="false"
                     :searchable="true"
                     :options="ingredients"
-                    class="form__control form__control--select the-form__control the-form__control--select"
+                    :classes="multiselectClasses"
+                    class="the-form__control the-form__control--select"
                     id="form"
                 />
             </div>
