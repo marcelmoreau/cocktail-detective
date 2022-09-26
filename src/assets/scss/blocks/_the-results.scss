@@ -10,6 +10,7 @@
     &__wrapper {
         @extend %grid;
 
+        align-items: center;
         grid-template-columns: var(--grid-columns-main);
         grid-column: main;
     }
@@ -19,6 +20,10 @@
 
         grid-template-columns: var(--grid-columns-main);
         grid-column: main;
+
+        &--placeholder {
+            grid-row: 1  / auto;
+        }
     }
 
     &__listItem {
@@ -35,6 +40,18 @@
 
     &__card {
         height: 100%;
+    }
+
+    &__empty {
+        color: var(--color-daisy-800);
+        grid-column: main;
+        grid-row: 1 / -1;
+        font-style: italic;
+        font-size: var(--font-size-lg);
+        font-weight: 600;
+        position: relative;
+        text-align: center;
+        text-shadow: 0.1275em 0.1175em var(--color-daisy-600), 0.1875em 0.1875em var(--color-daisy-400);
     }
 
 }

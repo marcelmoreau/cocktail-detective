@@ -7,8 +7,8 @@
     const API_KEY = ***REMOVED***
 
     const data = reactive({
-        ingredientsPicked: null,
         isLoading: false,
+        ingredientsPicked: null,
         ingredientsOptions: [],
         filteredDrinks: [],
         error: null
@@ -27,51 +27,31 @@
 
     populateIngredients()
 
-    // async getDropdownList(listType){
-    //     const response = await fetch(`/jazzhr${listType}.json`)
-    //     if(response.ok){
-    //         const jsonReturn = await response.json()
-    //         this[`all${listType}`] = jsonReturn.data
-    //     }
-    //     else {
-    //         this.errorMessage = "Issues pulling options."
-    //     }
-    // },
-    // async getCareers(){
-    //     this.loading = true
-    //     const response = await fetch(this.requestURL)
-    //     if (response.ok) {
-    //         const latestPull = await response.json()
-    //         if (latestPull.length < this.maxPerPull) {
-    //             this.moreToPull = false
-    //         }
-    //         this.jobs.push(...latestPull)
-    //     } else {
-    //         this.errorMessage = "Issue pulling latest careers."
-    //     }
-
-    //     this.loading = false
-    // },
-
 
     watch(
         () => data.ingredientsPicked,
         async (picked) => {
+
             data.isLoading = true
 
             let ingredients = picked.join(',')
 
             const response = await fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
 
+            // console.log(response.type)
+
             if (response.ok) {
                 const json = await response.json()
-                data.filteredDrinks = json.drinks
+                // console.log()
+                data.filteredDrinks = Array.isArray(json.drinks) ? json.drinks: []
+                data.isLoading = false
             } else {
+                // console.log(response)
                 this.error = "WATCH The Detective is drunk. Try again."
             }
-
-            data.isLoading = false
         }
+
+
     )
 
 </script>

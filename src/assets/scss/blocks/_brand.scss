@@ -30,7 +30,7 @@
     }
 
     &__copy {
-        animation: swole 1100ms 1000ms ease-in-out 1 forwards;
+        animation: swole 1100ms 900ms ease-in-out 1 forwards;
         font-variation-settings: 'wght' 100;
         line-height: 1;
     }
@@ -48,7 +48,7 @@
     }
 
     &__mask {
-        animation: pour 1300ms 700ms ease-in-out 1 forwards;
+        animation: pour 1300ms 600ms ease-in-out 1 forwards;
         height: 100%;
         transform: translateY(100%);
         transition: 200ms transform ease-in-out;

@@ -1,5 +1,8 @@
 <script setup>
+    import { ref, onMounted } from 'vue'
     import Multiselect from '@vueform/multiselect'
+
+    // const multiseleczt = ref(null)
 
     const multiselectClasses = {
         option: 'multiselect-option the-form__option',
@@ -8,10 +11,11 @@
 
     defineProps({
         ingredients: Array,
-        modelValue: Array
+        modelValue: null
     })
 
-    defineEmits(['update:modelValue'])
+    defineEmits(['update:modelValue', 'clearOptions'])
+
 
 </script>
 
@@ -27,6 +31,7 @@
                 <Multiselect
                     v-model="modelValue"
                     @select="$emit('update:modelValue', modelValue)"
+                    @clear="$emit('update:modelValue', modelValue)"
                     @deselect="$emit('update:modelValue', modelValue)"
                     mode="tags"
                     :close-on-select="false"

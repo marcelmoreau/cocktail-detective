@@ -2,29 +2,27 @@
     $b: &;
 
     &__body {
-        border: 0.125rem solid;
-        border-radius: 0.25rem;
-        padding: 1rem;
+        backdrop-filter: blur(1.4px);
+        box-shadow: inset 0 0 0 00.125rem rgba($color-white, 70%);
+        font-variation-settings: 'wght' 400;
+        padding: var(--space-m);
     }
 
     &--error {
         #{$b}__body {
-            background-color: mix($color-white, $color-error, 40%);
-            border-color: var(--color-error);
+            background-image: linear-gradient(135deg, rgba($color-error, 40%) 00%, rgba($color-white, 30%) 60%);
         }
     }
 
     &--info {
         #{$b}__body {
-            background-color: mix($color-white, $color-info, 40%);
-            border-color: var(--color-info);
+            background-image: linear-gradient(135deg, rgba($color-daisy-600, 40%) 00%, rgba($color-white, 30%) 60%);
         }
     }
 
     &--success {
         #{$b}__body {
-            background-color: mix($color-white, $color-success, 40%);
-            border-color: var(--color-success);
+            background-color: rgba($color-success, 30%);
         }
     }
 }

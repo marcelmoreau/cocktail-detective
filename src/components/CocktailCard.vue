@@ -13,12 +13,12 @@
         <div class="card__body">
             <div class="card__wrapper">
                 <div class="card__media">
-                    <img class="card__image" :src="image" alt="">
+                    <img alt="" class="card__image" :src="image">
                 </div>
                 <div class="card__content">
                     <div class="card__header">
                         <div class="card__heading">
-                            {{ name }} {{ id }}
+                            {{ name }}
                         </div>
                     </div>
                     <div class="card__torso">
@@ -46,7 +46,7 @@
                                 Directions
                             </div>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus at quis officia ea libero obcaecati aliquam.
+                                1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus at quis officia ea libero obcaecati aliquam.
                             </p>
                         </div>
                     </div>

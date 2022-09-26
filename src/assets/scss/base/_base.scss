@@ -29,3 +29,8 @@ button {
 input {
     background-color: var(--color-white);
 }
+
+::selection {
+    background-color: var(--color-royal-blue);
+    color: var(--color-white);
+}
