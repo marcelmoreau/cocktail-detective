@@ -27,19 +27,28 @@
     getDetails(props.id)
 
 
-    function bazz() {
-        data.cocktailDetails.map((item) => {
-            data.ingredientsNeeded = item.includes('strIngredient')
-        })
+
+    function getAllValuesForKeysLike(arr, prop) {
+        const regex = new RegExp(prop)
+        const getValuesForKeys = (obj) => {
+            return Object.entries(obj)
+                .filter(([key, value]) => regex.test(key) && value)
+                .map(([_, value]) => value)
+        }
+
+        return arr.map(getValuesForKeys).flat()
     }
 
+    const result = getAllValuesForKeysLike(data.cocktailDetails, 'strIngredient')
+
+    console.log(data.cocktailDetails)
 
 
-    const ingredientsNeeded = computed(() => {
+    // const publishedBooksMessage = computed(() => {
+    //     return author.books.length > 0 ? 'Yes' : 'No'
+    // })
 
-        // data.cocktailDetails
-        // return author.books.length > 0 ? 'Yes' : 'No'
-    })
+
 </script>
 
 <template>
@@ -62,9 +71,11 @@
                                 Ingredients
                             </div>
                             <ul class="card__list">
-                                <li class="card__listItem">
-                                    Lorem ipsum dolor sit amet
-                                </li>
+                                <template v-for="item in data.cocktailDetails">
+                                    <li class="card__listItem">
+
+                                    </li>
+                                </template>
                             </ul>
                         </div>
                         <div class="card__torsoModule">
