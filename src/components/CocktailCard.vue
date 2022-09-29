@@ -1,10 +1,45 @@
 <script setup>
+
+    import { reactive, computed } from 'vue'
+
     const props = defineProps({
         name: String,
         id: String,
         image: String
     })
 
+    const data = reactive({
+        cocktailDetails: [],
+        ingredientsNeeded: []
+    });
+
+    async function getDetails(id) {
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v2/***REMOVED***/lookup.php?i=${id}`)
+        if (response.ok) {
+            const json = await response.json()
+
+            data.cocktailDetails = json.drinks
+        } else {
+            this.error = "The Detective is drunk. Try again."
+        }
+    }
+
+    getDetails(props.id)
+
+
+    function bazz() {
+        data.cocktailDetails.map((item) => {
+            data.ingredientsNeeded = item.includes('strIngredient')
+        })
+    }
+
+
+
+    const ingredientsNeeded = computed(() => {
+
+        // data.cocktailDetails
+        // return author.books.length > 0 ? 'Yes' : 'No'
+    })
 </script>
 
 <template>
@@ -13,7 +48,7 @@
         <div class="card__body">
             <div class="card__wrapper">
                 <div class="card__media">
-                    <img alt="" class="card__image" :src="image">
+                    <img alt="" class="card__image" :src="image" loading="lazy">
                 </div>
                 <div class="card__content">
                     <div class="card__header">
@@ -30,23 +65,14 @@
                                 <li class="card__listItem">
                                     Lorem ipsum dolor sit amet
                                 </li>
-                                <li class="card__listItem">
-                                    Dolor lorem hello world
-                                </li>
-                                <li class="card__listItem">
-                                    Angostura bitters, to taste
-                                </li>
-                                <li class="card__listItem">
-                                    More ingredient here, thanks
-                                </li>
                             </ul>
                         </div>
                         <div class="card__torsoModule">
                             <div class="card__subheading">
                                 Directions
                             </div>
-                            <p>
-                                1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus at quis officia ea libero obcaecati aliquam.
+                            <p v-for="instruction in data.cocktailDetails">
+                                {{ instruction.strInstructions }}
                             </p>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
+    import { ref, watch, onMounted } from 'vue'
     import Multiselect from '@vueform/multiselect'
 
-    // const multiseleczt = ref(null)
+    const multiz = ref(null)
 
     const multiselectClasses = {
         option: 'multiselect-option the-form__option',
@@ -14,8 +14,7 @@
         modelValue: null
     })
 
-    defineEmits(['update:modelValue', 'clearOptions'])
-
+    defineEmits(['update:modelValue', 'clear'])
 
 </script>
 
@@ -31,7 +30,7 @@
                 <Multiselect
                     v-model="modelValue"
                     @select="$emit('update:modelValue', modelValue)"
-                    @clear="$emit('update:modelValue', modelValue)"
+                    @clear="$emit('clear')"
                     @deselect="$emit('update:modelValue', modelValue)"
                     mode="tags"
                     :close-on-select="false"
@@ -40,7 +39,15 @@
                     :classes="multiselectClasses"
                     class="the-form__control the-form__control--select"
                     id="form"
-                />
+                >
+
+                    <template #caret>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="the-form__caret">
+                            <path d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </template>
+
+                </Multiselect>
             </div>
         </div>
     </div>

@@ -61,7 +61,6 @@
 
     --ms-empty-color: #4B5563;
 
-
     @extend %grid;
 
     margin-top: var(--space-xl);
@@ -100,5 +99,25 @@
 
     &__tagRemove:hover {
         background-color: var(--color-gray-600);
+    }
+
+    &__control--select {
+        &.is-open #{$b}__caret {
+            transform: translateY(-0.125em);
+        }
+        &:hover #{$b}__caret {
+            transform: translateY(-0.125em);
+        }
+    }
+
+    &__caret {
+        stroke: currentColor;
+        fill: none;
+        height: 1.125em;
+        transition: transform 250ms ease-in-out;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 0.125rem;
+        width: 2.5em;
     }
 }

@@ -4,18 +4,13 @@
 
     const props = defineProps({
         isLoading: Boolean,
+        resultsMore: Boolean,
         filteredDrinks: {
             type: Array,
             default: () => []
-
-        }
+        },
+        filteredDrinksIds: Array,
     })
-
-
-
-    // v-if="resources && !resources.length && !isLoading"
-    // nothing found
-
 
 </script>
 
@@ -37,6 +32,7 @@
                     />
                 </li>
             </ul>
+
         </div>
     </div>
     <div
@@ -45,7 +41,7 @@
         <div class="the-results">
             <ul class="the-results__list">
                 <li class="the-results__listItem">
-                    <div class="skeleton">
+                    <div class="skeleton skeleton--dynamic">
                         <div class="skeleton__wrapper">
                             <div class="skeleton__media">
                                 <div class="skeleton__image skeleton__bone"></div>
@@ -59,7 +55,7 @@
                     </div>
                 </li>
                 <li class="the-results__listItem">
-                    <div class="skeleton">
+                    <div class="skeleton skeleton--dynamic">
                         <div class="skeleton__wrapper">
                             <div class="skeleton__media">
                                 <div class="skeleton__image skeleton__bone"></div>
@@ -73,7 +69,7 @@
                     </div>
                 </li>
                 <li class="the-results__listItem">
-                    <div class="skeleton">
+                    <div class="skeleton skeleton--dynamic">
                         <div class="skeleton__wrapper">
                             <div class="skeleton__media">
                                 <div class="skeleton__image skeleton__bone"></div>
@@ -87,7 +83,7 @@
                     </div>
                 </li>
                 <li class="the-results__listItem">
-                    <div class="skeleton">
+                    <div class="skeleton skeleton--dynamic">
                         <div class="skeleton__wrapper">
                             <div class="skeleton__media">
                                 <div class="skeleton__image skeleton__bone"></div>
