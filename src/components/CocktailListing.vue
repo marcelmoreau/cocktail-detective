@@ -1,26 +1,25 @@
 <script setup>
-    import { reactive, watch } from 'vue'
-    import TheForm from '@/components/TheForm.vue'
-    import TheResults from '@/components/TheResults.vue'
+    import { reactive, nextTick, computed, watch } from 'vue'
+    import Multiselect from '@vueform/multiselect'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2/`
     const API_KEY = ***REMOVED***
 
     const data = reactive({
         isLoading: false,
+        isCapped: false,
         ingredientsPicked: null,
         ingredientsOptions: [],
-        filteredCocktails: [],
         filteredDrinks: [],
-        drinkA: [],
-        drinkB: [],
-        drinkC: [],
-        tets: [],
         error: null,
         resultsMore: true,
-        resultsMax: 50
+        resultsMax: 8
     });
 
+    const multiselectClasses = {
+        option: 'multiselect-option the-form__option',
+        tagRemove: 'multiselect-tag-remove the-form__tagRemove'
+    }
 
     async function populateIngredients() {
         const response = await fetch(`${API_URL}/${API_KEY}/list.php?i=list`)
@@ -28,7 +27,7 @@
             const json = await response.json()
             data.ingredientsOptions = json.drinks.map(obj => obj.strIngredient1)
         } else {
-            this.error = "The Detective is drunk. Try again."
+            data.error = "The Detective is drunk. Try again."
         }
     }
 
@@ -38,73 +37,296 @@
     watch(
         () => data.ingredientsPicked,
         async (picked) => {
-            data.isLoading = true
 
-            let ingredients = picked.join(',')
+            if (picked.length) {
+                data.isLoading = true
 
-            const response = await fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
+                let ingredients = picked.join(',')
 
-            if (response.ok) {
-                const ingredGrab = await response.json()
+                fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
+                    .then((booze) => {
+                        if (booze.ok) {
+                            return booze.json()
+                        }
+                    })
+                    .then(booze => {
+                        return booze;
+                    })
+                    .then(async booze => {
+                        await Promise.all(booze.drinks.map((e, index, array) => {
+                            return fetch(`${API_URL}/${API_KEY}/lookup.php?i=${e.idDrink}`)
+                                .then(response => response.json())
+                                .then(booze => {
+                                    array[index] = {...e, ...booze};
+                                })
+                        }));
 
-                data.drinkA = Array.isArray(ingredGrab.drinks) ? ingredGrab.drinks: []
+                        data.filteredDrinks = booze.drinks
 
-
-                if(data.drinkA.length) {
-
-
-
-                    // example of id lookup for a cocktail
-                    /*
-
-
-                    {
-                        "drinks":[
-                            {
-                                "idDrink":"11007","strDrink":"Margarita","strDrinkAlternate":null,"strTags":"IBA,ContemporaryClassic","strVideo":null,"strCategory":"Ordinary Drink","strIBA":"Contemporary Classics","strAlcoholic":"Alcoholic","strGlass":"Cocktail glass","strInstructions":"Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass.","strInstructionsES":null,"strInstructionsDE":"Reiben Sie den Rand des Glases mit der Limettenscheibe, damit das Salz daran haftet. Achten Sie darauf, dass nur der \u00e4u\u00dfere Rand angefeuchtet wird und streuen Sie das Salz darauf. Das Salz sollte sich auf den Lippen des Genie\u00dfers befinden und niemals in den Cocktail einmischen. Die anderen Zutaten mit Eis sch\u00fctteln und vorsichtig in das Glas geben.","strInstructionsFR":null,"strInstructionsIT":"Strofina il bordo del bicchiere con la fetta di lime per far aderire il sale.\r\nAvere cura di inumidire solo il bordo esterno e cospargere di sale.\r\nIl sale dovrebbe presentarsi alle labbra del bevitore e non mescolarsi mai al cocktail.\r\nShakerare gli altri ingredienti con ghiaccio, quindi versarli delicatamente nel bicchiere.","strInstructionsZH-HANS":null,"strInstructionsZH-HANT":null,"strDrinkThumb":"https:\/\/www.thecocktaildb.com\/images\/media\/drink\/5noda61589575158.jpg","strIngredient1":"Tequila","strIngredient2":"Triple sec","strIngredient3":"Lime juice","strIngredient4":"Salt","strIngredient5":null,"strIngredient6":null,"strIngredient7":null,"strIngredient8":null,"strIngredient9":null,"strIngredient10":null,"strIngredient11":null,"strIngredient12":null,"strIngredient13":null,"strIngredient14":null,"strIngredient15":null,"strMeasure1":"1 1\/2 oz ","strMeasure2":"1\/2 oz ","strMeasure3":"1 oz ","strMeasure4":null,"strMeasure5":null,"strMeasure6":null,"strMeasure7":null,"strMeasure8":null,"strMeasure9":null,"strMeasure10":null,"strMeasure11":null,"strMeasure12":null,"strMeasure13":null,"strMeasure14":null,"strMeasure15":null,"strImageSource":"https:\/\/commons.wikimedia.org\/wiki\/File:Klassiche_Margarita.jpg","strImageAttribution":"Cocktailmarler","strCreativeCommonsConfirmed":"Yes","dateModified":"2015-08-18 14:42:59"
-                            }
-                        ]
-                    }
-
-                    */
-
-
-
-                    // get the idDrink key's value from each array item's object
-
-                    // hit each id's endpoint /lookup.php?i=11007
-
-                    // get strInstructions and put it in respective filteredDrinks's array item
-
-                    // get strIngredient...
-
-
-                }
-
-
-                data.isLoading = false
+                        data.isLoading = false
+                    });
             } else {
-                // console.log(response)
-                this.error = "WATCH The Detective is drunk. Try again."
+                data.filteredDrinks = []
             }
+
+        }
+    )
+
+
+    const bazz = computed(() => {
+
+        // return data.filteredDrinks.map(elem => elem.idDrink)
+        // return 'hi'
+
+        // console.log(`${data.filteredDrinks.map(elem => elem.idDrink)}`)
+
+        // return data.filteredDrinks.map(({drinks}) => {
+        //     // elem.drinks.map((elem) => {
+        //     //     return elem.idDrink
+        //     // })
+        //     return drinks.idDrink
+        // })
+
+    })
+
+
+    const hasLoadMore = computed(() => {
+        return data.resultsMax > data.filteredDrinks.length ? data.isCapped = false : data.isCapped = true
+    })
+
+    const listingCapped = computed(() => {
+        return data.filteredDrinks.slice(0, data.resultsMax)
+    })
+
+    function loadMore() {
+        if (data.resultsMax > data.filteredDrinks.length) {
+            return
         }
 
+        data.resultsMax = data.resultsMax + 10
+    }
 
-    )
+
+    function getAllValuesForKeysLike(arr, prop) {
+        const regex = new RegExp(prop)
+        const getValuesForKeys = (obj) => {
+            return Object.entries(obj)
+            .filter(([key, value]) => regex.test(key) && value)
+            .map(([_, value]) => value)
+        }
+        return arr.map(getValuesForKeys).flat()
+    }
+
 
 </script>
 
 <template>
     <div class="cocktails">
-        <TheForm
-            v-model="data.ingredientsPicked"
-            :ingredients="data.ingredientsOptions"
-            @clear="data.ingredientsPicked = []"
-        />
-        <TheResults
-            :isLoading="data.isLoading"
-            :filteredDrinks="data.drinkA"
-            :resultsMore="data.resultsMore"
-        />
+
+        <div class="form the-form">
+            <div class="the-form__wrapper">
+                <div class="form__field the-form__formField">
+                    <div class="the-form__labelWrapper">
+                        <label class="form__label the-form__label" for="form">
+                            What ingredients do you have?
+                        </label>
+                    </div>
+                    <Multiselect
+                        v-model="data.ingredientsPicked"
+                        @clear="data.ingredientsPicked = []"
+                        mode="tags"
+                        :close-on-select="false"
+                        :searchable="true"
+                        :options="data.ingredientsOptions"
+                        :classes="multiselectClasses"
+                        class="the-form__control the-form__control--select"
+                        id="form"
+                    >
+
+                        <template #caret>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="the-form__caret">
+                                <path d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </template>
+
+                    </Multiselect>
+                </div>
+            </div>
+        </div>
+
+        <div
+            v-if="data.filteredDrinks.length && !data.isLoading"
+        >
+            <div class="the-results">
+                <ul class="the-results__list">
+                    <li
+                        v-for="(cocktail, index) in listingCapped"
+                        :key="cocktail.idDrink"
+                        class="the-results__listItem"
+                    >
+                        <div class="card">
+                            {{ bazz }}
+                            <div class="card__body">
+                                <div class="card__wrapper">
+                                    <div class="card__media">
+                                        <img alt="" class="card__image" :src=" cocktail.strDrinkThumb" loading="lazy">
+                                    </div>
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <div class="card__heading">
+                                                {{ cocktail.strDrink }} {{ bazz }}
+                                            </div>
+                                        </div>
+                                        <div class="card__torso">
+                                            <div class="card__torsoModule">
+                                                <div class="card__subheading">
+                                                    Ingredients
+                                                </div>
+                                                <ul class="card__list">
+                                                    <li v-for="item in getAllValuesForKeysLike(cocktail.drinks, 'strIngredient')" class="card__listItem">
+
+                                                        <span>
+
+                                                            xx
+                                                        </span>
+
+                                                        <span>
+                                                            {{ item }}
+                                                        </span>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="card__torsoModule">
+                                                <div class="card__subheading">
+                                                    Directions
+                                                </div>
+                                                <p>
+                                                    {{ cocktail.drinks[0].strInstructions }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div v-if="hasLoadMore" class="the-results__wrapper">
+                    <div class="the-results__loadMore">
+                        <button class="button" @click="loadMore">Load more</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div
+            v-else-if="data.isLoading"
+        >
+            <div class="the-results">
+                <ul class="the-results__list">
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="the-results__listItem">
+                        <div class="skeleton skeleton--dynamic">
+                            <div class="skeleton__wrapper">
+                                <div class="skeleton__media">
+                                    <div class="skeleton__image skeleton__bone"></div>
+                                </div>
+                                <div class="skeleton__content">
+                                    <div class="skeleton__bone skeleton__heading"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                    <div class="skeleton__bone skeleton__module"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            v-else
+            class="the-results"
+        >
+            <div class="the-results__wrapper">
+                <div class="the-results__empty">
+                    No cocktails found. Select some ingredients.
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </template>

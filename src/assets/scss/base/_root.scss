@@ -52,6 +52,7 @@
 
     --step--2: clamp(0.69rem, calc(0.60rem + 0.41vw), 0.96rem);
     --step--1: clamp(0.83rem, calc(0.70rem + 0.57vw), 1.20rem);
+    --step-base: clamp(1rem, 0vw + 1rem, 1rem);
     --step-0: clamp(1.00rem, calc(0.82rem + 0.78vw), 1.50rem);
     --step-1: clamp(1.20rem, calc(0.95rem + 1.05vw), 1.88rem);
     --step-2: clamp(1.44rem, calc(1.11rem + 1.41vw), 2.34rem);

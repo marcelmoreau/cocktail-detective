@@ -8,8 +8,7 @@
         filteredDrinks: {
             type: Array,
             default: () => []
-        },
-        filteredDrinksIds: Array,
+        }
     })
 
 </script>

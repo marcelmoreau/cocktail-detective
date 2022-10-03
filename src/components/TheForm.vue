@@ -2,8 +2,6 @@
     import { ref, watch, onMounted } from 'vue'
     import Multiselect from '@vueform/multiselect'
 
-    const multiz = ref(null)
-
     const multiselectClasses = {
         option: 'multiselect-option the-form__option',
         tagRemove: 'multiselect-tag-remove the-form__tagRemove'
