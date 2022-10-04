@@ -73,23 +73,6 @@
     )
 
 
-    const bazz = computed(() => {
-
-        // return data.filteredDrinks.map(elem => elem.idDrink)
-        // return 'hi'
-
-        // console.log(`${data.filteredDrinks.map(elem => elem.idDrink)}`)
-
-        // return data.filteredDrinks.map(({drinks}) => {
-        //     // elem.drinks.map((elem) => {
-        //     //     return elem.idDrink
-        //     // })
-        //     return drinks.idDrink
-        // })
-
-    })
-
-
     const hasLoadMore = computed(() => {
         return data.resultsMax > data.filteredDrinks.length ? data.isCapped = false : data.isCapped = true
     })
@@ -107,13 +90,14 @@
     }
 
 
-    function getAllValuesForKeysLike(arr, prop) {
-        const regex = new RegExp(prop)
+    function getAllValuesForKeysLike(arr, prop1, prop2) {
+        const regex = new RegExp(prop1|prop2)
         const getValuesForKeys = (obj) => {
             return Object.entries(obj)
             .filter(([key, value]) => regex.test(key) && value)
             .map(([_, value]) => value)
         }
+
         return arr.map(getValuesForKeys).flat()
     }
 
@@ -165,7 +149,6 @@
                         class="the-results__listItem"
                     >
                         <div class="card">
-                            {{ bazz }}
                             <div class="card__body">
                                 <div class="card__wrapper">
                                     <div class="card__media">
@@ -183,17 +166,13 @@
                                                     Ingredients
                                                 </div>
                                                 <ul class="card__list">
-                                                    <li v-for="item in getAllValuesForKeysLike(cocktail.drinks, 'strIngredient')" class="card__listItem">
-
-                                                        <span>
-
-                                                            xx
-                                                        </span>
-
+                                                    <li
+                                                        v-for="item in getAllValuesForKeysLike(cocktail.drinks, 'strMeasure', 'strIngredient')"
+                                                        class="card__listItem"
+                                                    >
                                                         <span>
                                                             {{ item }}
                                                         </span>
-
                                                     </li>
                                                 </ul>
                                             </div>
