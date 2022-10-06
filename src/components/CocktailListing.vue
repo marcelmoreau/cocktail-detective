@@ -3,7 +3,7 @@
     import Multiselect from '@vueform/multiselect'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2/`
-    const API_KEY = ***REMOVED***
+    const API_KEY = import.meta.env.VITE_API_KEY
 
     const data = reactive({
         isLoading: false,
@@ -89,28 +89,15 @@
         data.resultsMax = data.resultsMax + 10
     }
 
-
-    function getAllValuesForKeysLike(arr, prop1, prop2) {
-        const regex1 = new RegExp(prop1)
-        const regex2 = new RegExp(prop2)
-        const getValuesForKeys = (obj) => {
-            // console.log(Object.entries(obj))
-
-            // let baz = Object.entries(obj).filter(([key, value]) => {
-            //     (regex1.test(key) || regex2.test(key)) && value)
-            // }
-            // console.log(baz)
-
-            // return Object.entries(obj)
-            // console.log(Object.entries(obj))
-            // .filter(([key, value]) => (regex1.test(key) || regex2.test(key)) && value)
-            // .map(([_, value]) => value)
-        }
-
-        // console.log(arr.map(getValuesForKeys).flat())
-        return arr.map(getValuesForKeys).flat()
+    function recipe(arr) {
+        return Object.entries(arr[0])
+            .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
+            .reduce((acc, [k, v]) => {
+                const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
+                acc[n-1] = {...acc[n-1], [t]:v};
+            return acc;
+        }, [])
     }
-
 
 </script>
 
@@ -178,11 +165,11 @@
 
                                                 <ul class="card__list">
                                                     <li
-                                                        v-for="(item, index) in getAllValuesForKeysLike(cocktail.drinks, 'strMeasure', 'strIngredient')"
+                                                        v-for="(item, index) in recipe(cocktail.drinks)"
                                                         class="card__listItem"
                                                     >
-
-                                                            {{ item }}
+                                                        <span>{{ item.Measure }}</span>
+                                                        <span>{{ item.Ingredient }}</span>
 
                                                     </li>
                                                 </ul>
