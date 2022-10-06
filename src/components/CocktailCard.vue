@@ -41,7 +41,7 @@
 
     const result = getAllValuesForKeysLike(data.cocktailDetails, 'strIngredient')
 
-    console.log(data.cocktailDetails)
+    // console.log(data.cocktailDetails)
 
 
     // const publishedBooksMessage = computed(() => {
