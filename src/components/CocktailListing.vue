@@ -3,7 +3,7 @@
     import Multiselect from '@vueform/multiselect'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2/`
-    const API_KEY = import.meta.env.VITE_API_KEY
+    const API_KEY = ***REMOVED***
 
     const data = reactive({
         isLoading: false,
@@ -46,10 +46,14 @@
                 fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
                     .then((booze) => {
                         if (booze.ok) {
+                            // console.log(booze)
                             return booze.json()
                         }
                     })
                     .then(booze => {
+                        if (!booze.drinks instanceof Array) {
+                            throw new Error('error');
+                        }
                         return booze;
                     })
                     .then(async booze => {
@@ -64,7 +68,12 @@
                         data.filteredDrinks = booze.drinks
 
                         data.isLoading = false
-                    });
+
+                    })
+                    .catch(error => {
+                        data.isLoading = false
+                        data.filteredDrinks = []
+                    })
             } else {
                 data.filteredDrinks = []
             }
