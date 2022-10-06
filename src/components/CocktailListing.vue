@@ -1,6 +1,7 @@
 <script setup>
-    import { reactive, nextTick, computed, watch } from 'vue'
+    import { reactive, computed, watch } from 'vue'
     import Multiselect from '@vueform/multiselect'
+    import gsap from 'gsap'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2/`
     const API_KEY = ***REMOVED***
@@ -11,7 +12,6 @@
         ingredientsPicked: null,
         ingredientsOptions: [],
         filteredDrinks: [],
-        error: null,
         resultsMore: true,
         resultsMax: 8
     });
@@ -108,6 +108,28 @@
         }, [])
     }
 
+
+
+    function onBeforeEnter(el) {
+        el.style.opacity = 0
+    }
+
+    function onEnter(el, done) {
+        gsap.to(el, {
+            opacity: 1,
+            delay: el.dataset.index * 0.025,
+            onComplete: done
+        })
+    }
+
+    function onLeave(el, done) {
+        gsap.to(el, {
+            opacity: 0,
+            delay: el.dataset.index * 0.025,
+            onComplete: done
+        })
+    }
+
 </script>
 
 <template>
@@ -148,10 +170,18 @@
             v-if="data.filteredDrinks.length && !data.isLoading"
         >
             <div class="the-results">
-                <ul class="the-results__list">
+                <TransitionGroup
+                    :css="false"
+                    tag="ul"
+                    @before-enter="onBeforeEnter"
+                    @enter="onEnter"
+                    @leave="onLeave"
+                    class="the-results__list"
+                >
                     <li
                         v-for="(cocktail, index) in listingCapped"
                         :key="cocktail.idDrink"
+                        :data-index="index"
                         class="the-results__listItem"
                     >
                         <div class="card">
@@ -197,7 +227,7 @@
                             </div>
                         </div>
                     </li>
-                </ul>
+                </TransitionGroup>
 
                 <div v-if="hasLoadMore" class="the-results__wrapper">
                     <div class="the-results__loadMore">
