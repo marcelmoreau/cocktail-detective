@@ -90,6 +90,14 @@
         return data.filteredDrinks.slice(0, data.resultsMax)
     })
 
+    const trimTrailingSpace = (str) => {
+        if (str.length || '') {
+            return str.replace(/\s+$/, '')
+        } else {
+            return
+        }
+    }
+
     function loadMore() {
         if (data.resultsMax > data.filteredDrinks.length) {
             return
@@ -107,7 +115,6 @@
             return acc;
         }, [])
     }
-
 
 
     function onBeforeEnter(el) {
@@ -207,9 +214,10 @@
                                                         v-for="(item, index) in recipe(cocktail.drinks)"
                                                         class="card__listItem"
                                                     >
-                                                        <span>{{ item.Measure }}</span>
+                                                        <span v-if="item.Measure">
+                                                            <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
+                                                        </span>
                                                         <span>{{ item.Ingredient }}</span>
-
                                                     </li>
                                                 </ul>
                                             </div>
