@@ -176,72 +176,89 @@
         <div
             v-if="data.filteredDrinks.length && !data.isLoading"
         >
-            <div class="the-results">
-                <TransitionGroup
-                    :css="false"
-                    tag="ul"
-                    @before-enter="onBeforeEnter"
-                    @enter="onEnter"
-                    @leave="onLeave"
-                    class="the-results__list"
-                >
-                    <li
-                        v-for="(cocktail, index) in listingCapped"
-                        :key="cocktail.idDrink"
-                        :data-index="index"
-                        class="the-results__listItem"
-                    >
-                        <div class="card">
-                            <div class="card__body">
-                                <div class="card__wrapper">
-                                    <div class="card__media">
-                                        <img alt="" class="card__image" :src=" cocktail.strDrinkThumb" loading="lazy">
-                                    </div>
-                                    <div class="card__content">
-                                        <div class="card__header">
-                                            <div class="card__heading">
-                                                {{ cocktail.strDrink }}
-                                            </div>
-                                        </div>
-                                        <div class="card__torso">
-                                            <div class="card__torsoModule">
-                                                <div class="card__subheading">
-                                                    Ingredients
-                                                </div>
 
-                                                <ul class="card__list">
-                                                    <li
-                                                        v-for="(item, index) in recipe(cocktail.drinks)"
-                                                        class="card__listItem"
-                                                    >
-                                                        <span v-if="item.Measure">
-                                                            <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
-                                                        </span>
-                                                        <span>{{ item.Ingredient }}</span>
-                                                    </li>
-                                                </ul>
+        <div class="the-results">
+            <div class="the-results__wrapper">
+                <div class="the-results__headingWrapper">
+                    <h2 class="heading the-results__heading">
+                        You could potentially make <strong>{{ data.filteredDrinks.length }}</strong> {{ data.filteredDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
+                    </h2>
+                </div>
+            </div>
+            <TransitionGroup
+                :css="false"
+                tag="ul"
+                @before-enter="onBeforeEnter"
+                @enter="onEnter"
+                @leave="onLeave"
+                class="the-results__list"
+            >
+                <li
+                    v-for="(cocktail, index) in listingCapped"
+                    :key="cocktail.idDrink"
+                    :data-index="index"
+                    class="the-results__listItem"
+                >
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="card__wrapper">
+                                <div class="card__media">
+                                    <img alt="" class="card__image" :src=" cocktail.strDrinkThumb" loading="lazy">
+                                </div>
+                                <div class="card__content">
+                                    <div class="card__header">
+                                        <div class="card__heading">
+                                            {{ cocktail.strDrink }}
+                                        </div>
+                                    </div>
+                                    <div class="card__torso">
+                                        <div class="card__torsoModule">
+                                            <div class="card__subheading">
+                                                Ingredients
                                             </div>
-                                            <div class="card__torsoModule">
-                                                <div class="card__subheading">
-                                                    Directions
-                                                </div>
-                                                <p>
-                                                    {{ cocktail.drinks[0].strInstructions }}
-                                                </p>
+
+                                            <ul class="card__list">
+                                                <li
+                                                    v-for="(item, index) in recipe(cocktail.drinks)"
+                                                    class="card__listItem"
+                                                >
+                                                    <span v-if="item.Measure">
+                                                        <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
+                                                    </span>
+                                                    <span>{{ item.Ingredient }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card__torsoModule">
+                                            <div class="card__subheading">
+                                                Directions
                                             </div>
+                                            <p>
+                                                {{ cocktail.drinks[0].strInstructions }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </TransitionGroup>
-
-                <div v-if="hasLoadMore" class="the-results__wrapper">
-                    <div class="the-results__loadMore">
-                        <button class="button" @click="loadMore">Load more</button>
                     </div>
+                </li>
+            </TransitionGroup>
+
+            <div v-if="hasLoadMore" class="the-results__wrapper">
+                <div class="the-results__loadMore">
+                    <button
+                        @click="loadMore"
+                        class="button"
+                    >
+                        <span class="button__shadow"></span>
+                        <span class="button__edge"></span>
+                        <span class="button__front">
+                            Load more
+                        </span>
+                    </button>
                 </div>
+            </div>
 
             </div>
         </div>

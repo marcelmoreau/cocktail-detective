@@ -29,3 +29,7 @@ h1 {
 h2 {
     font-size: clamp(1.25rem, calc(1.59vw + 0.6rem), 2rem);
 }
+
+strong {
+    font-weight: 700;
+}

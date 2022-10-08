@@ -15,6 +15,16 @@
         grid-column: main;
     }
 
+    &__headingWrapper {
+
+        grid-column: main;
+        text-align: center;
+    }
+
+    &__heading {
+        @extend %heading-accent;
+    }
+
     &__list {
         @extend %grid;
 
