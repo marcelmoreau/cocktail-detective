@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
     <div class="masthead">
         <div class="masthead__body">

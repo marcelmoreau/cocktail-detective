@@ -1,142 +1,125 @@
-<script setup>
-    import { reactive, computed, watch } from 'vue'
+<script>
+    import { computed, watch } from 'vue'
     import Multiselect from '@vueform/multiselect'
     import gsap from 'gsap'
+import TheMasthead from './TheMasthead.vue'
 
-    const API_URL = `https://www.thecocktaildb.com/api/json/v2/`
+    const API_URL = `https://www.thecocktaildb.com/api/json/v2`
     const API_KEY = ***REMOVED***
 
-    const data = reactive({
-        isLoading: false,
-        isCapped: false,
-        ingredientsPicked: null,
-        ingredientsOptions: [],
-        filteredDrinks: [],
-        resultsMore: true,
-        resultsMax: 8
-    });
-
-    const multiselectClasses = {
-        option: 'multiselect-option the-form__option',
-        tagRemove: 'multiselect-tag-remove the-form__tagRemove'
-    }
-
-    async function populateIngredients() {
-        const response = await fetch(`${API_URL}/${API_KEY}/list.php?i=list`)
-        if (response.ok) {
-            const json = await response.json()
-            data.ingredientsOptions = json.drinks.map(obj => obj.strIngredient1)
-        } else {
-            data.error = "The Detective is drunk. Try again."
-        }
-    }
-
-    populateIngredients()
-
-
-    watch(
-        () => data.ingredientsPicked,
-        async (picked) => {
-
-            if (picked.length) {
-                data.isLoading = true
-
-                let ingredients = picked.join(',')
-
-                fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
-                    .then((booze) => {
-                        if (booze.ok) {
-                            // console.log(booze)
-                            return booze.json()
-                        }
-                    })
-                    .then(booze => {
-                        if (!booze.drinks instanceof Array) {
-                            throw new Error('error');
-                        }
-                        return booze;
-                    })
-                    .then(async booze => {
-                        await Promise.all(booze.drinks.map((e, index, array) => {
-                            return fetch(`${API_URL}/${API_KEY}/lookup.php?i=${e.idDrink}`)
-                                .then(response => response.json())
-                                .then(booze => {
-                                    array[index] = {...e, ...booze};
-                                })
-                        }));
-
-                        data.filteredDrinks = booze.drinks
-
-                        data.isLoading = false
-
-                    })
-                    .catch(error => {
-                        data.isLoading = false
-                        data.filteredDrinks = []
-                    })
-            } else {
-                data.filteredDrinks = []
+    export default {
+        components: {
+            Multiselect
+        },
+        data() {
+            return {
+                isLoading: false,
+                isCapped: false,
+                ingredientsPicked: [],
+                ingredientsList: [],
+                filteredDrinks: [],
+                totalDrinks: null,
+                noResults: false,
+                resultsMore: false,
+                resultsMax: 10,
+                multiselectClasses: {
+                    option: 'multiselect-option the-form__option',
+                    tagRemove: 'multiselect-tag-remove the-form__tagRemove'
+                },
             }
+        },
 
+        methods: {
+            async getIngredients() {
+                const response = await fetch(`${API_URL}/${API_KEY}/list.php?i=list`)
+                const json = await response.json()
+
+                this.ingredientsList = json.drinks.map(obj => obj.strIngredient1)
+            },
+
+            async fetchCocktailSummaries(...ingredients) {
+                this.isLoading = true
+
+                const response = await fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
+                const jsonSummary = await response.json()
+
+                this.filteredDrinks = jsonSummary.drinks
+
+                if (jsonSummary.drinks instanceof Array) {
+                    this.filteredDrinks = jsonSummary.drinks
+                    this.fetchCocktailDetails(...ingredients)
+                } else {
+                    this.noResults = true
+                }
+            },
+
+            async fetchCocktailDetails(...ingredients) {
+                for (const [index, drink] of this.filteredDrinks.entries()) {
+
+                    const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
+                    const jsonDetails = await details.json()
+
+                    this.filteredDrinks[index]['instructions'] = jsonDetails.drinks[0]['strInstructions']
+
+                    const pullIngredients = function(arr) {
+                        return Object.entries(arr[0])
+                            .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
+                            .reduce((acc, [k, v]) => {
+                                const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
+                                acc[n-1] = {...acc[n-1], [t]:v};
+                            return acc;
+                        }, [])
+                    }
+
+                    this.filteredDrinks[index]['ingredients'] = pullIngredients(jsonDetails.drinks)
+                }
+
+                this.isLoading = false
+            },
+
+
+            onBeforeEnter(el) {
+                el.style.opacity = 0
+            },
+
+            onEnter(el, done) {
+                gsap.to(el, {
+                    opacity: 1,
+                    delay: el.dataset.index * 0.025,
+                    onComplete: done
+                })
+            },
+
+            onLeave(el, done) {
+                gsap.to(el, {
+                    opacity: 0,
+                    delay: el.dataset.index * 0.025,
+                    onComplete: done
+                })
+            },
+
+            trimTrailingSpace(str) {
+                if (str.length || '') {
+                    return str.replace(/\s+$/, '')
+                } else {
+                    return
+                }
+            }
+        },
+
+        created() {
+            this.getIngredients()
+        },
+
+        watch: {
+            ingredientsPicked(ingredientsPicked, ingredientsOld) {
+                if (ingredientsPicked.length) {
+                    this.fetchCocktailSummaries(...ingredientsPicked)
+                }
+            }
         }
-    )
 
-
-    const hasLoadMore = computed(() => {
-        return data.resultsMax > data.filteredDrinks.length ? data.isCapped = false : data.isCapped = true
-    })
-
-    const listingCapped = computed(() => {
-        return data.filteredDrinks.slice(0, data.resultsMax)
-    })
-
-    const trimTrailingSpace = (str) => {
-        if (str.length || '') {
-            return str.replace(/\s+$/, '')
-        } else {
-            return
-        }
     }
-
-    function loadMore() {
-        if (data.resultsMax > data.filteredDrinks.length) {
-            return
-        }
-
-        data.resultsMax = data.resultsMax + 10
-    }
-
-    function recipe(arr) {
-        return Object.entries(arr[0])
-            .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
-            .reduce((acc, [k, v]) => {
-                const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
-                acc[n-1] = {...acc[n-1], [t]:v};
-            return acc;
-        }, [])
-    }
-
-
-    function onBeforeEnter(el) {
-        el.style.opacity = 0
-    }
-
-    function onEnter(el, done) {
-        gsap.to(el, {
-            opacity: 1,
-            delay: el.dataset.index * 0.025,
-            onComplete: done
-        })
-    }
-
-    function onLeave(el, done) {
-        gsap.to(el, {
-            opacity: 0,
-            delay: el.dataset.index * 0.025,
-            onComplete: done
-        })
-    }
-
 </script>
 
 <template>
@@ -151,12 +134,12 @@
                         </label>
                     </div>
                     <Multiselect
-                        v-model="data.ingredientsPicked"
-                        @clear="data.ingredientsPicked = []"
+                        v-model="ingredientsPicked"
+                        @clear="ingredientsPicked = []"
                         mode="tags"
                         :close-on-select="false"
                         :searchable="true"
-                        :options="data.ingredientsOptions"
+                        :options="ingredientsList"
                         :classes="multiselectClasses"
                         class="the-form__control the-form__control--select"
                         id="form"
@@ -173,99 +156,105 @@
             </div>
         </div>
 
-        <div
-            v-if="data.filteredDrinks.length && !data.isLoading"
-        >
+        <div v-if="filteredDrinks.length && !isLoading">
 
-        <div class="the-results">
-            <div class="the-results__wrapper">
-                <div class="the-results__headingWrapper">
-                    <h2 class="heading the-results__heading">
-                        You could potentially make <strong>{{ data.filteredDrinks.length }}</strong> {{ data.filteredDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
-                    </h2>
+            <div class="the-results">
+                <div class="the-results__wrapper">
+                    <div class="the-results__headingWrapper">
+                        <h2 class="heading the-results__heading">
+                            You could potentially make <strong>{{ filteredDrinks.length }}</strong> {{ filteredDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
+                        </h2>
+                    </div>
                 </div>
-            </div>
-            <TransitionGroup
-                :css="false"
-                tag="ul"
-                @before-enter="onBeforeEnter"
-                @enter="onEnter"
-                @leave="onLeave"
-                class="the-results__list"
-            >
-                <li
-                    v-for="(cocktail, index) in listingCapped"
-                    :key="cocktail.idDrink"
-                    :data-index="index"
-                    class="the-results__listItem"
+                <TransitionGroup
+                    :css="false"
+                    tag="ul"
+                    @before-enter="onBeforeEnter"
+                    @enter="onEnter"
+                    @leave="onLeave"
+                    class="the-results__list"
                 >
-                    <div class="card">
-                        <div class="card__body">
-                            <div class="card__wrapper">
-                                <div class="card__media">
-                                    <img alt="" class="card__image" :src=" cocktail.strDrinkThumb" loading="lazy">
-                                </div>
-                                <div class="card__content">
-                                    <div class="card__header">
-                                        <div class="card__heading">
-                                            {{ cocktail.strDrink }}
-                                        </div>
+                    <li
+                        v-for="(cocktail, index) in filteredDrinks"
+                        :key="cocktail.idDrink"
+                        :data-index="index"
+                        class="the-results__listItem"
+                    >
+                        <div class="card">
+                            <div class="card__body">
+                                <div class="card__wrapper">
+                                    <div class="card__media">
+                                        <img
+                                            :src="cocktail.strDrinkThumb"
+                                            alt=""
+                                            class="card__image"
+                                            loading="lazy"
+                                        >
                                     </div>
-                                    <div class="card__torso">
-                                        <div class="card__torsoModule">
-                                            <div class="card__subheading">
-                                                Ingredients
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <div class="card__heading">
+                                                {{ cocktail.strDrink }}
+                                            </div>
+                                        </div>
+                                        <div class="card__torso">
+                                            <div class="card__torsoModule">
+                                                <div class="card__subheading">
+                                                    Ingredients
+                                                </div>
+
+                                                <ul class="card__list">
+                                                    <li
+                                                        v-for="item in cocktail.ingredients"
+                                                        class="card__listItem"
+                                                    >
+                                                        <span v-if="item.Measure">
+                                                            <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
+                                                        </span>
+                                                        <span>{{ item.Ingredient }}</span>
+                                                    </li>
+                                                </ul>
                                             </div>
 
-                                            <ul class="card__list">
-                                                <li
-                                                    v-for="(item, index) in recipe(cocktail.drinks)"
-                                                    class="card__listItem"
-                                                >
-                                                    <span v-if="item.Measure">
-                                                        <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
-                                                    </span>
-                                                    <span>{{ item.Ingredient }}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card__torsoModule">
-                                            <div class="card__subheading">
-                                                Directions
+                                            <div class="card__torsoModule">
+                                                <div class="card__subheading">
+                                                    Directions
+                                                </div>
+                                                <p>
+                                                    {{ cocktail.instructions }}
+                                                </p>
                                             </div>
-                                            <p>
-                                                {{ cocktail.drinks[0].strInstructions }}
-                                            </p>
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </li>
+                </TransitionGroup>
+
+                <div
+                    v-if="resultsMore"
+                    class="the-results__wrapper"
+                >
+                    <div class="the-results__loadMore">
+                        <button
+                            @click="loadMore"
+                            class="button"
+                        >
+                            <span class="button__shadow"></span>
+                            <span class="button__edge"></span>
+                            <span class="button__front">
+                                Load more
+                            </span>
+                        </button>
                     </div>
-                </li>
-            </TransitionGroup>
-
-            <div v-if="hasLoadMore" class="the-results__wrapper">
-                <div class="the-results__loadMore">
-                    <button
-                        @click="loadMore"
-                        class="button"
-                    >
-                        <span class="button__shadow"></span>
-                        <span class="button__edge"></span>
-                        <span class="button__front">
-                            Load more
-                        </span>
-                    </button>
                 </div>
-            </div>
-
             </div>
         </div>
 
-        <div
-            v-else-if="data.isLoading"
-        >
+        <div v-else-if="isLoading && !noResults">
             <div class="the-results">
                 <ul class="the-results__list">
                     <li class="the-results__listItem">
@@ -357,17 +346,25 @@
         </div>
 
         <div
+            v-else-if="noResults"
+            class="the-results"
+        >
+            <div class="the-results__wrapper">
+                <div class="the-results__empty">
+                    No cocktails found! Modify your ingredients.
+                </div>
+            </div>
+        </div>
+
+        <div
             v-else
             class="the-results"
         >
             <div class="the-results__wrapper">
                 <div class="the-results__empty">
-                    No cocktails found. Select some ingredients.
+                    Select some ingredients!
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </template>

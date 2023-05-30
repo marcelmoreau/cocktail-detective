@@ -1,7 +1,14 @@
-<script setup>
+<script>
     import { RouterLink, RouterView } from 'vue-router'
     import TheMasthead from './components/TheMasthead.vue'
-    import CocktailListing from './components/CocktailListing.vue';
+
+
+export default {
+    components: {
+        TheMasthead
+    }
+}
+
 </script>
 
 <template>
