@@ -14,14 +14,12 @@ import TheMasthead from './TheMasthead.vue'
         data() {
             return {
                 isLoading: false,
-                isCapped: false,
                 ingredientsPicked: [],
                 ingredientsList: [],
-                filteredDrinks: [],
+                foundDrinks: [],
                 totalDrinks: null,
                 noResults: false,
-                resultsMore: false,
-                resultsMax: 10,
+                resultsMax: 8,
                 multiselectClasses: {
                     option: 'multiselect-option the-form__option',
                     tagRemove: 'multiselect-tag-remove the-form__tagRemove'
@@ -37,46 +35,52 @@ import TheMasthead from './TheMasthead.vue'
                 this.ingredientsList = json.drinks.map(obj => obj.strIngredient1)
             },
 
-            async fetchCocktailSummaries(...ingredients) {
+            async fetchCocktails(...ingredients) {
                 this.isLoading = true
 
                 const response = await fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
                 const jsonSummary = await response.json()
 
-                this.filteredDrinks = jsonSummary.drinks
-
                 if (jsonSummary.drinks instanceof Array) {
-                    this.filteredDrinks = jsonSummary.drinks
-                    this.fetchCocktailDetails(...ingredients)
+                    this.foundDrinks = jsonSummary.drinks
+
+                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+                    for (const [index, drink] of this.foundDrinks.entries()) {
+
+                        const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
+                        const jsonDetails = await details.json()
+
+                        this.foundDrinks[index]['instructions'] = jsonDetails.drinks[0]['strInstructions']
+
+                        const pullIngredients = function(arr) {
+                            return Object.entries(arr[0])
+                                .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
+                                .reduce((acc, [k, v]) => {
+                                    const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
+                                    acc[n-1] = {...acc[n-1], [t]:v};
+                                return acc;
+                            }, [])
+                        }
+
+                        this.foundDrinks[index]['ingredients'] = pullIngredients(jsonDetails.drinks)
+
+                        await delay(30)
+                    }
+
+                    this.isLoading = false
+
                 } else {
                     this.noResults = true
                 }
             },
 
-            async fetchCocktailDetails(...ingredients) {
-                for (const [index, drink] of this.filteredDrinks.entries()) {
-
-                    const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
-                    const jsonDetails = await details.json()
-
-                    this.filteredDrinks[index]['instructions'] = jsonDetails.drinks[0]['strInstructions']
-
-                    const pullIngredients = function(arr) {
-                        return Object.entries(arr[0])
-                            .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
-                            .reduce((acc, [k, v]) => {
-                                const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
-                                acc[n-1] = {...acc[n-1], [t]:v};
-                            return acc;
-                        }, [])
-                    }
-
-                    this.filteredDrinks[index]['ingredients'] = pullIngredients(jsonDetails.drinks)
+            loadMore() {
+                if (this.resultsMax > this.foundDrinks) {
+                    return
                 }
-
-                this.isLoading = false
+                this.resultsMax = this.resultsMax + this.resultsMax
             },
-
 
             onBeforeEnter(el) {
                 el.style.opacity = 0
@@ -107,6 +111,13 @@ import TheMasthead from './TheMasthead.vue'
             }
         },
 
+        computed: {
+            drinks() {
+                return this.foundDrinks.slice(0, this.resultsMax)
+            }
+        },
+
+
         created() {
             this.getIngredients()
         },
@@ -114,7 +125,7 @@ import TheMasthead from './TheMasthead.vue'
         watch: {
             ingredientsPicked(ingredientsPicked, ingredientsOld) {
                 if (ingredientsPicked.length) {
-                    this.fetchCocktailSummaries(...ingredientsPicked)
+                    this.fetchCocktails(...ingredientsPicked)
                 }
             }
         }
@@ -156,13 +167,12 @@ import TheMasthead from './TheMasthead.vue'
             </div>
         </div>
 
-        <div v-if="filteredDrinks.length && !isLoading">
-
+        <div v-if="foundDrinks.length && !isLoading">
             <div class="the-results">
                 <div class="the-results__wrapper">
                     <div class="the-results__headingWrapper">
                         <h2 class="heading the-results__heading">
-                            You could potentially make <strong>{{ filteredDrinks.length }}</strong> {{ filteredDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
+                            You could potentially make <strong>{{ foundDrinks.length }}</strong> {{ foundDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
                         </h2>
                     </div>
                 </div>
@@ -175,7 +185,7 @@ import TheMasthead from './TheMasthead.vue'
                     class="the-results__list"
                 >
                     <li
-                        v-for="(cocktail, index) in filteredDrinks"
+                        v-for="(cocktail, index) in drinks"
                         :key="cocktail.idDrink"
                         :data-index="index"
                         class="the-results__listItem"
@@ -224,8 +234,6 @@ import TheMasthead from './TheMasthead.vue'
                                                     {{ cocktail.instructions }}
                                                 </p>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +243,7 @@ import TheMasthead from './TheMasthead.vue'
                 </TransitionGroup>
 
                 <div
-                    v-if="resultsMore"
+                    v-if="this.foundDrinks.length > this.resultsMax"
                     class="the-results__wrapper"
                 >
                     <div class="the-results__loadMore">
