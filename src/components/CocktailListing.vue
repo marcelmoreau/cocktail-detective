@@ -17,9 +17,10 @@ import TheMasthead from './TheMasthead.vue'
                 ingredientsPicked: [],
                 ingredientsList: [],
                 foundDrinks: [],
+                shownDrinks: [],
                 totalDrinks: null,
                 noResults: false,
-                resultsMax: 3,
+                resultsMax: 10,
                 multiselectClasses: {
                     option: 'multiselect-option the-form__option',
                     tagRemove: 'multiselect-tag-remove the-form__tagRemove'
@@ -76,10 +77,10 @@ import TheMasthead from './TheMasthead.vue'
             },
 
             loadMore() {
-                if (this.resultsMax > this.foundDrinks) {
+                if (this.resultsMax > this.foundDrinks.length) {
                     return
                 }
-                this.resultsMax = this.resultsMax + this.resultsMax
+                this.resultsMax = this.resultsMax + 10
             },
 
             onBeforeEnter(el) {
@@ -116,7 +117,6 @@ import TheMasthead from './TheMasthead.vue'
                 return this.foundDrinks.slice(0, this.resultsMax)
             }
         },
-
 
         created() {
             this.getIngredients()
