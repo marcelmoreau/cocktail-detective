@@ -1,0 +1,50 @@
+@keyframes headShake {
+    0% {
+        transform: translateX(0);
+    }
+
+    6.5% {
+        transform: translateX(-4px) rotateY(-9deg);
+    }
+
+    18.5% {
+        transform: translateX(3px) rotateY(7deg);
+    }
+
+    31.5% {
+        transform: translateX(-2px) rotateY(-5deg);
+    }
+
+    43.5% {
+        transform: translateX(1px) rotateY(3deg);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+}
+
+.loading {
+    $b: &;
+
+    text-align: center;
+
+    #{$b}__loader {
+        width: 50%;
+    }
+
+    #{$b}__loaderMatte {
+        fill: var(--color-daisy-700);
+        backdrop-filter: blur(2.8px);
+        opacity: 0.375;
+    }
+
+    #{$b}__loaderParts {
+        fill: var(--color-white);
+        opacity: 0.7755;
+        animation-duration: 2.5s;
+        animation-iteration-count: infinite;
+        animation-name: headShake;
+        animation-timing-function: ease-in-out;
+    }
+}

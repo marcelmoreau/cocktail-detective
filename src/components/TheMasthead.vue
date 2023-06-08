@@ -2,7 +2,7 @@
     <div class="masthead">
         <div class="masthead__body">
 
-            <div class="brand brand--dark">
+            <a class="brand brand--dark" href="/">
                 <div class="brand__body">
                     <div class="brand__copy brand__cocktail">
                         Cocktail
@@ -26,7 +26,7 @@
                         Detective
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </template>

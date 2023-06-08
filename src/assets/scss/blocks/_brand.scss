@@ -1,6 +1,9 @@
 .brand {
     $b: &;
 
+    display: block;
+    text-decoration: none;
+
     @keyframes swole {
         to {
             font-variation-settings: 'wght' 500;
