@@ -116,6 +116,7 @@ import TheMasthead from './TheMasthead.vue'
 
             deselected() {
                 this.$refs.multiselect.close()
+                this.foundDrinks = []
             },
         },
 
