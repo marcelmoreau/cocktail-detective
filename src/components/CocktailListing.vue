@@ -17,8 +17,6 @@ import TheMasthead from './TheMasthead.vue'
                 ingredientsPicked: [],
                 ingredientsList: [],
                 foundDrinks: [],
-                shownDrinks: [],
-                totalDrinks: null,
                 noResults: false,
                 resultsMax: 10,
                 multiselectClasses: {
@@ -109,7 +107,16 @@ import TheMasthead from './TheMasthead.vue'
                 } else {
                     return
                 }
-            }
+            },
+
+            clear() {
+                this.ingredientsPicked = []
+                this.foundDrinks = []
+            },
+
+            deselected() {
+                this.$refs.multiselect.close()
+            },
         },
 
         computed: {
@@ -123,7 +130,7 @@ import TheMasthead from './TheMasthead.vue'
         },
 
         watch: {
-            ingredientsPicked(ingredientsPicked, ingredientsOld) {
+            ingredientsPicked(ingredientsPicked) {
                 if (ingredientsPicked.length) {
                     this.fetchCocktails(...ingredientsPicked)
                 }
@@ -146,12 +153,15 @@ import TheMasthead from './TheMasthead.vue'
                     </div>
                     <Multiselect
                         v-model="ingredientsPicked"
-                        @clear="ingredientsPicked = []"
+                        @clear="clear"
+                        @deselect="deselected"
                         mode="tags"
-                        :close-on-select="false"
+                        :close-on-select="true"
+                        :close-on-deselect="true"
                         :searchable="true"
                         :options="ingredientsList"
                         :classes="multiselectClasses"
+                        ref="multiselect"
                         class="the-form__control the-form__control--select"
                         id="form"
                     >
