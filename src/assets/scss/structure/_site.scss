@@ -10,6 +10,7 @@
         align-items: center;
         font-size: var(--step--2);
         justify-content: center;
+        margin-bottom: var(--space-2xs);
         margin-top: auto;
         padding-top: var(--space-2xs);
         text-align: center;
@@ -17,11 +18,8 @@
 
     &__footerWrapper {
         align-items: center;
-        background-color: var(--color-daisy-500);
         display: flex;
         flex-wrap: wrap;
-        padding: var(--space-xs);
-        padding-bottom: var(--space-2xs);
     }
 
     &__footerIcon {
@@ -31,11 +29,11 @@
         height: 1.125em;
     }
 
-    &__footerLink{
+    &__footerLink {
         font-weight: 400;
     }
 
     &__footerIconGlass {
-        fill: var(--color-daisy-700);
+        fill: var(--color-gray-400);
     }
 }

@@ -7,35 +7,30 @@
 
 $color-white: #FFF;
 $color-gray-200: #EEE;
-$color-gray-400: #A9A9A9;
-$color-gray-500: #8F8F8F;
-$color-gray-600: #666666;
-$color-gray-700: #444444;
-$color-gray-800: #2a2a2a;
-$color-gray-900: #151515;
+$color-gray-300: #d1d5db;
+$color-gray-400: #9ca3af;
+$color-gray-500: #6b7280;
+$color-gray-600: #4b5563;
+$color-gray-700: #374151;
+$color-gray-800: #111827;
+$color-gray-900: #030712;
 
 // color
-
-$color-daisy-100: #FDF9ED;
-$color-daisy-200: #F9ECC8;
-$color-daisy-300: #F5DFA3;
-$color-daisy-400: #EEC659;
-$color-daisy-500: #EABA34;
-$color-daisy-600: #DEA917;
-$color-daisy-700: #B98D13;
-$color-daisy-800: #947010;
-$color-royal-blue: #5386E4;
-$color-russian-green: #629460;
-$color-cadet-crayola: #ADB6C4;
-$color-mariner: #3C5DA3;
-$color-english-red: #A54657;
-$color-paradise-pink: #F0386B;
+// https://coolors.co/palette/006d77-83c5be-edf6f9-ffddd2-e29578
+$color-pine-green: #006D77;
+$color-half-baked: #83C5BE;
+$color-mischka: #edf6f9;
+$color-watsui: #ffddd2;
+$color-pink: #E29578;
+$color-space-cadet: #1B264F;
+$color-amaranth: #A5243D;
 
 
 // theme
-$color-error: $color-english-red;
-$color-info: $color-cadet-crayola;
-$color-success: $color-russian-green;
+
+$color-error: $color-amaranth;
+$color-info: $color-space-cadet;
+$color-success: $color-pine-green;
 
 
 // space
@@ -51,7 +46,7 @@ $breakpoints: (
     md: 768px,
     lg: 1000px,
     xl: 1200px,
-    xxl: 1460px
+    xxl: 1420px
 );
 
 
@@ -60,16 +55,17 @@ $breakpoints: (
 $color-body: $color-gray-800;
 $body-font-weight: 400;
 $body-line-height: 1.4;
+$container: 1380px;
 
 
 // type
 
-$font-family-sans-serif: "Inter", sans-serif;
-$font-family-accent: "Josefin Sans", Georgia, serif;
+$font-family-sans-serif: "Roboto Mono", sans-serif;
+$font-family-accent: "Playfair Display", Georgia, serif;
 
 $heading-font-family: $font-family-accent;
-$heading-font-weight: 400;
+$heading-font-weight: 700;
 $heading-line-height: 1.25;
 
-$link: $color-royal-blue;
-$link-hover: $color-english-red;
+$link: $color-pine-green;
+$link-hover: $color-pink;

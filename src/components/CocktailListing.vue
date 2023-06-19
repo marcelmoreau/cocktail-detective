@@ -2,7 +2,6 @@
     import { computed, watch } from 'vue'
     import Multiselect from '@vueform/multiselect'
     import gsap from 'gsap'
-import TheMasthead from './TheMasthead.vue'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2`
     const API_KEY = ***REMOVED***
@@ -143,15 +142,12 @@ import TheMasthead from './TheMasthead.vue'
 
 <template>
     <div class="cocktails">
-
         <div class="form the-form">
             <div class="the-form__wrapper">
                 <div class="form__field the-form__formField">
-                    <div class="the-form__labelWrapper">
-                        <label class="form__label the-form__label" for="form">
-                            What ingredients do you have?
-                        </label>
-                    </div>
+                    <label class="form__label the-form__label" for="form">
+                        What ingredients do you have?
+                    </label>
                     <Multiselect
                         v-model="ingredientsPicked"
                         @clear="clear"
@@ -178,78 +174,79 @@ import TheMasthead from './TheMasthead.vue'
 
         <div v-if="foundDrinks.length && !isLoading">
             <div class="the-results">
+
                 <div class="the-results__wrapper">
-                    <div class="the-results__headingWrapper">
-                        <h2 class="heading the-results__heading">
-                            You could potentially make <strong>{{ foundDrinks.length }}</strong> {{ foundDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
-                        </h2>
-                    </div>
+                    <h2 class="heading the-results__heading">
+                        You could potentially make <span class="the-results__amount">{{ foundDrinks.length }}</span> {{ foundDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
+                    </h2>
                 </div>
-                <TransitionGroup
-                    :css="false"
-                    tag="ul"
-                    @before-enter="onBeforeEnter"
-                    @enter="onEnter"
-                    @leave="onLeave"
-                    class="the-results__list"
-                >
-                    <li
-                        v-for="(cocktail, index) in drinks"
-                        :key="cocktail.idDrink"
-                        :data-index="index"
-                        class="the-results__listItem"
+                <div class="the-results__wrapper">
+                    <TransitionGroup
+                        :css="false"
+                        tag="ul"
+                        @before-enter="onBeforeEnter"
+                        @enter="onEnter"
+                        @leave="onLeave"
+                        class="the-results__list"
                     >
-                        <div class="card">
-                            <div class="card__body">
-                                <div class="card__wrapper">
-                                    <div class="card__media">
-                                        <img
-                                            :src="cocktail.strDrinkThumb"
-                                            alt=""
-                                            class="card__image"
-                                            loading="lazy"
-                                        >
-                                    </div>
-                                    <div class="card__content">
-                                        <div class="card__header">
-                                            <div class="card__heading">
-                                                {{ cocktail.strDrink }}
-                                            </div>
+                        <li
+                            v-for="(cocktail, index) in drinks"
+                            :key="cocktail.idDrink"
+                            :data-index="index"
+                            class="the-results__listItem"
+                        >
+                            <div class="card">
+                                <div class="card__body">
+                                    <div class="card__wrapper">
+                                        <div class="card__media">
+                                            <img
+                                                :src="cocktail.strDrinkThumb"
+                                                alt=""
+                                                class="card__image"
+                                                loading="lazy"
+                                            >
                                         </div>
-                                        <div class="card__torso">
-                                            <div class="card__torsoModule">
-                                                <div class="card__subheading">
-                                                    Ingredients
+                                        <div class="card__content">
+                                            <div class="card__header">
+                                                <div class="card__heading">
+                                                    {{ cocktail.strDrink }}
                                                 </div>
-
-                                                <ul class="card__list">
-                                                    <li
-                                                        v-for="item in cocktail.ingredients"
-                                                        class="card__listItem"
-                                                    >
-                                                        <span v-if="item.Measure">
-                                                            <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
-                                                        </span>
-                                                        <span>{{ item.Ingredient }}</span>
-                                                    </li>
-                                                </ul>
                                             </div>
+                                            <div class="card__torso">
+                                                <div class="card__torsoModule">
+                                                    <div class="card__subheading">
+                                                        Ingredients
+                                                    </div>
 
-                                            <div class="card__torsoModule">
-                                                <div class="card__subheading">
-                                                    Directions
+                                                    <ul class="card__list">
+                                                        <li
+                                                            v-for="item in cocktail.ingredients"
+                                                            class="card__listItem"
+                                                        >
+                                                            <span v-if="item.Measure">
+                                                                <span class="card__listItemUnit" v-html="trimTrailingSpace(`${item.Measure}`)"></span>
+                                                            </span>
+                                                            <span>{{ item.Ingredient }}</span>
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                <p>
-                                                    {{ cocktail.instructions }}
-                                                </p>
+
+                                                <div class="card__torsoModule">
+                                                    <div class="card__subheading">
+                                                        Directions
+                                                    </div>
+                                                    <p>
+                                                        {{ cocktail.instructions }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </TransitionGroup>
+                        </li>
+                    </TransitionGroup>
+                </div>
 
                 <div
                     v-if="this.foundDrinks.length > this.resultsMax"
@@ -268,6 +265,7 @@ import TheMasthead from './TheMasthead.vue'
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -297,7 +295,7 @@ import TheMasthead from './TheMasthead.vue'
         >
             <div class="the-results__wrapper">
                 <div class="the-results__empty">
-                    Select some ingredients!
+                    <div>Select some ingredients above!</div>
                 </div>
             </div>
         </div>

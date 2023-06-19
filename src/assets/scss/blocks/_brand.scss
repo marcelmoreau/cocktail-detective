@@ -1,86 +1,38 @@
 .brand {
     $b: &;
 
+    color: var(--body-color);
     display: block;
     text-decoration: none;
-
-    @keyframes swole {
-        to {
-            font-variation-settings: 'wght' 500;
-        }
-    }
-
-    @keyframes pour {
-        to {
-            transform: translateY(14%)
-        }
-    }
-
-    --brand-font-size: var(--step-2);
-
     font-family: $font-family-accent;
-    font-size: var(--brand-font-size);
-    text-transform: uppercase;
+    font-size: var(--font-size-lg);
 
     &__body {
         align-items: center;
         display: flex;
-        justify-content: center;
         padding-bottom: 0.5em;
-        padding-left: 0.75em;
-        padding-right: 0.75em;
-        padding-top: 0.75em;
-    }
-
-    &__copy {
-        animation: swole 1100ms 900ms ease-in-out 1 forwards;
-        font-variation-settings: 'wght' 100;
-        line-height: 1;
+        padding-top: 0.5em;
     }
 
     &__visual {
-        margin-left: 0.5em;
         margin-right: 0.5em;
     }
 
     &__icon {
         display: block;
         height: 1.25em;
-        transform: translateY(-0.0825em);
         width: 1.25em;
     }
 
-    &__mask {
-        animation: pour 1300ms 600ms ease-in-out 1 forwards;
-        height: 100%;
-        transform: translateY(100%);
-        transition: 200ms transform ease-in-out;
-        width: 100%;
-    }
-
     &__iconGlass {
-        fill: var(--color-white);
-    }
-
-    &__iconStick {
-        fill: var(--color-white);
-    }
-
-    &__iconOlive {
-        fill: var(--color-body);
+        fill: var(--color-gray-900);
     }
 
     &__iconLiquid {
-        fill: var(--color-daisy-500);
+        fill: var(--color-pink);
     }
 
-    &__iconReflection {
-        fill: var(--color-gray-400);
+    &:hover {
+        color: var(--color-pine-green);
     }
-
-    &--dark {
-        background-color: var(--color-gray-900);
-        color: var(--color-white);
-    }
-
 }

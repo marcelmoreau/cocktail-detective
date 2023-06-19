@@ -5,24 +5,24 @@
     --ms-line-height: var(--body-line-height);
     --ms-bg: var(--color-white);
     --ms-bg-disabled: var(--color-gray-200);
-    --ms-border-color: #CB9B15;
+    --ms-border-color: var(--color-half-baked);
     --ms-border-width: 0.175rem;
     --ms-radius: 0.25rem;
     --ms-py: 0.75em;
     --ms-px: 0.5em;
-    --ms-ring-width: 3px;
-    --ms-ring-color: var(--color-daisy-600);
+    --ms-ring-width: 2px;
+    --ms-ring-color: var(--color-pink);
     --ms-placeholder-color: #9CA3AF;
     --ms-max-height: 10rem;
 
     --ms-spinner-color: #10B981;
     --ms-caret-color: var(--body-color);
-    --ms-clear-color: var(--color-english-red);
+    --ms-clear-color: var(--color-amaranth);
     --ms-clear-color-hover: var(--body-color);
 
-    --ms-tag-font-size: 1rem;
+    --ms-tag-font-size: 0.925rem;
     --ms-tag-line-height: 1.25;
-    --ms-tag-font-weight: 600;
+    --ms-tag-font-weight: 400;
     --ms-tag-bg: var(--body-color);
     --ms-tag-bg-disabled: var(--color-gray-200);
     --ms-tag-color: var(--color-white);
@@ -46,51 +46,36 @@
 
     --ms-option-font-size: 1rem;
     --ms-option-line-height: 1.375;
-    --ms-option-bg-pointed: #FFFFFF;
+    --ms-option-bg-pointed: var(--color-white);
     --ms-option-color-pointed: #1F2937;
-    --ms-option-bg-selected: var(--color-russian-green);
-    --ms-option-color-selected: #FFFFFF;
-    --ms-option-bg-disabled: #FFFFFF;
-    --ms-option-color-disabled: #D1D5DB;
-    --ms-option-bg-selected-pointed: purple;
-    --ms-option-color-selected-pointed: #FFFFFF;
-    --ms-option-bg-selected-disabled: #FFFFFF;
+    --ms-option-bg-selected: var(--color-pine-green);
+    --ms-option-color-selected: var(--color-white);
+    --ms-option-bg-disabled: var(--color-white);
+    --ms-option-color-disabled: var(--color-gray-300);
+    --ms-option-bg-selected-pointed: var(--color-half-baked);
+    --ms-option-color-selected-pointed: var(--color-white);
+    --ms-option-bg-selected-disabled: var(--color-white);
     --ms-option-color-selected-disabled: #D1FAE5;
     --ms-option-py: 0.5rem;
     --ms-option-px: 0.75rem;
 
     --ms-empty-color: #4B5563;
 
-    @extend %grid;
-
     margin-top: var(--space-xl);
 
     &__wrapper {
-        grid-column: main;
-
-        @include at(md) {
-            grid-column: 3 / span 10;
-        }
-
-        @include at(lg) {
-            grid-column: 4 / span 8;
-        }
-    }
-
-    &__labelWrapper {
-        text-align: center;
+        @extend %grid;
     }
 
     &__label {
-        @extend %heading-accent;
-
-        display: inline-block;
-        font-size: var(--font-size-xl);
-        text-align: center;
+        display: block;
+        font-size: var(--step-0);
+        font-weight: 700;
+        margin-bottom: var(--space-xs);
     }
 
     &__option:hover {
-        background-color: var(--color-daisy-200);
+        background-color: var(--color-gray-300);
     }
 
     &__tagRemove {
@@ -111,13 +96,13 @@
     }
 
     &__caret {
-        stroke: currentColor;
         fill: none;
         height: 1.125em;
-        transition: transform 250ms ease-in-out;
+        stroke: currentColor;
         stroke-linecap: round;
         stroke-linejoin: round;
         stroke-width: 0.125rem;
+        transition: transform 250ms ease-in-out;
         width: 2.5em;
     }
 }

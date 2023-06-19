@@ -1,0 +1,19 @@
+.grid {
+    --grid-column-count: 12;
+    --grid-edge: 1.25rem;
+    --grid-max-width: #{$container};
+
+    display: grid;
+    grid-template-columns: [full-start] var(--grid-edge) [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end] var(--grid-edge) [full-end];
+    grid-template-rows: auto;
+
+    & > * {
+        grid-column: main;
+    }
+
+    @include at(xxl) {
+        --grid-edge: calc((100vw - var(--grid-max-width)) * 0.5);
+        --grid-column-width: calc((100vw - (var(--grid-edge) * 2)) / var(--grid-column-count));
+    }
+}
+

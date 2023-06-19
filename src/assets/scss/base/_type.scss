@@ -1,10 +1,5 @@
 .heading {
     @extend %heading;
-
-    &--accent {
-        background-color: var(--color-daisy-500);
-        display: inline-block;
-    }
 }
 
 a {
@@ -23,11 +18,11 @@ a {
 
 
 h1 {
-    font-size: clamp(1.25rem, calc(1.59vw + 0.6rem), 2.5rem);
+    font-size: var(--step-0);
 }
 
 h2 {
-    font-size: clamp(1.25rem, calc(1.59vw + 0.6rem), 2rem);
+    font-size: var(--step-0);
 }
 
 strong {

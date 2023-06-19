@@ -1,50 +1,35 @@
 .the-results {
     $b: &;
 
-    --grid-edge: 0;
     @extend %grid;
 
-    margin-bottom: var(--space-xl);
-    margin-top: var(--space-xl);
+    --grid-row-gap: 0;
 
-    &__wrapper {
-        @extend %grid;
+    margin-bottom: var(--space-l);
+    margin-top: var(--space-l);
 
-        align-items: center;
-        grid-template-columns: var(--grid-columns-main);
-        grid-column: main;
-    }
-
-    &__headingWrapper {
-
-        grid-column: main;
-        text-align: center;
-    }
-
-    &__heading {
-        @extend %heading-accent;
+    &__amount {
+        text-decoration: underline;
+        text-underline-offset: 0.275em;
+        text-decoration-color: var(--color-pink);
+        text-decoration-thickness: 0.125em;
     }
 
     &__list {
         @extend %grid;
 
-        grid-template-columns: var(--grid-columns-main);
-        grid-column: main;
-
-        &--placeholder {
-            grid-row: 1  / auto;
-        }
+        --grid-custom-columns: repeat(var(--grid-column-count), minmax(0, 1fr));
     }
 
     &__listItem {
-        grid-column: main;
+        grid-column: span 12;
 
         @include at(lg) {
             grid-column: auto / span 6;
         }
 
         @include at(xxl) {
-            grid-column: auto / span 4;
+            grid-column: auto / span 6;
         }
     }
 
@@ -58,10 +43,9 @@
     }
 
     &__empty {
-        background-color: rgba($color-white, 20%);
-        border: 0.0625rem solid $color-white;
+        background-color: var(--color-mischka);
+        border: 0.25rem dotted var(--color-gray-300);
         font-size: var(--step--1);
-        font-weight: 600;
         grid-column: span 12;
         padding-bottom: var(--space-m);
         padding-left: var(--space-m);
@@ -69,7 +53,6 @@
         padding-top: var(--space-m);
         position: relative;
         text-align: center;
-        text-shadow: 0.1275em 0.1175em var(--color-gray-300), 0.1875em 0.1875em var(--color-gray-200);
 
         @include at(lg) {
             grid-column: 3 / span 8;

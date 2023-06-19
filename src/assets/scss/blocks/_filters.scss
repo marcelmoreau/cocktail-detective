@@ -23,7 +23,7 @@
     }
 
     &__label {
-        background-color: $color-royal-blue;
+        background-color: $color-space-cadet;
         border-radius: 0.25rem;
         cursor: pointer;
         display: block;
@@ -34,7 +34,7 @@
     }
 
     &__label:hover {
-        background-color: adjust-color($color-royal-blue, $lightness: -10%);
+        background-color: adjust-color($color-space-cadet, $lightness: -10%);
     }
 
 }
