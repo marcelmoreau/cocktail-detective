@@ -174,13 +174,12 @@
 
         <div v-if="foundDrinks.length && !isLoading">
             <div class="the-results">
-
                 <div class="the-results__wrapper">
                     <h2 class="heading the-results__heading">
                         You could potentially make <span class="the-results__amount">{{ foundDrinks.length }}</span> {{ foundDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
                     </h2>
                 </div>
-                <div class="the-results__wrapper">
+                <div class="the-results__wrapper the-results__wrapper--wide">
                     <TransitionGroup
                         :css="false"
                         tag="ul"
