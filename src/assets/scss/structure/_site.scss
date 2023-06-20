@@ -3,7 +3,7 @@
 
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100dvh;
 
     &__footer {
         display: flex;
@@ -21,6 +21,8 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        padding-left: var(--grid-gutter-sm);
+        padding-right: var(--grid-gutter-sm);
     }
 
     &__footerIcon {
