@@ -1,10 +1,10 @@
 <script>
-    import { computed, watch } from 'vue'
+    // import 'dotenv/config'
     import Multiselect from '@vueform/multiselect'
     import gsap from 'gsap'
 
     const API_URL = `https://www.thecocktaildb.com/api/json/v2`
-    const API_KEY = ***REMOVED***
+    const API_KEY = import.meta.env.VITE_COCKTAIL_API_KEY
 
     export default {
         components: {
@@ -42,7 +42,7 @@
                 if (jsonSummary.drinks instanceof Array) {
                     this.foundDrinks = jsonSummary.drinks
 
-                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
                     for (const [index, drink] of this.foundDrinks.entries()) {
 
