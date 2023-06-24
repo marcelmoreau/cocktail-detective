@@ -1,87 +1,27 @@
 .button {
     $b: &;
 
-    background-color: transparent;
+    background-color: var(--color-pine-green);
     border: none;
     border-radius: 0.25rem;
     color: var(--color-white);
     cursor: pointer;
     display: inline-block;
     font-family: inherit;
-    outline-offset: 0.25em;
-    padding: 0;
-    position: relative;
+    font-size: var(--step-base);
+    font-weight: 700;
+    padding: 0.75em 1.25em;
     text-align: center;
-    transition: filter 250ms;
+    text-shadow: 1px 1px 0 var(--color-gray-900);
     vertical-align: top;
 
 
-    &__front {
-        display: block;
-        position: relative;
-        padding: 12px 42px;
-        border-radius: 0.25em;
-        font-size: var(--step-base);
-        color: white;
-        background-color: var(--color-pine-green);
-        will-change: transform;
-        transform: translateY(-3px);
-        transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
-    }
-
-    &__shadow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 0.25em;
-        background-color: hsl(0deg 0% 0% / 0.2);
-        will-change: transform;
-        transform: translateY(1px);
-        transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
-    }
-
-    &__edge {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 0.25em;
-        background-image: linear-gradient(to left,
-            hsl(219deg 185% 86%) 0%,
-            hsl(219deg 185% 82%) 8%,
-            hsl(219deg 185% 82%) 92%,
-            hsl(219deg 185% 71%) 100%
-        );
-    }
-
-
     &:hover {
-        filter: brightness(106%);
-
-        #{$b}__front {
-            transform: translateY(-4px);
-            transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-
-        #{$b}__shadow {
-            transform: translateY(2px);
-            transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-        }
+        background-color: #014A51;
     }
 
     &:active {
-
-        #{$b}__front {
-            transform: translateY(-2px);
-            transition: transform 30ms;
-        }
-        #{$b}__shadow{
-            transform: translateY(1px);
-            transition: transform 30ms;
-        }
+        background-color: #02373C;
     }
 
     &:focus:not(:focus-visible) {

@@ -16,8 +16,10 @@
                 ingredientsPicked: [],
                 ingredientsList: [],
                 foundDrinks: [],
+                outputDrinks: [],
+                counter: 0,
+                batchSize: 10,
                 noResults: false,
-                resultsMax: 10,
                 multiselectClasses: {
                     option: 'multiselect-option the-form__option',
                     tagRemove: 'multiselect-tag-remove the-form__tagRemove'
@@ -33,52 +35,62 @@
                 this.ingredientsList = json.drinks.map(obj => obj.strIngredient1)
             },
 
+            loadMore() {
+                this.fetchCocktailDetails(this.counter)
+            },
+
             async fetchCocktails(...ingredients) {
                 this.isLoading = true
+
+                this.foundDrinks = []
+                this.outputDrinks = []
 
                 const response = await fetch(`${API_URL}/${API_KEY}/filter.php?i=${ingredients}`)
                 const jsonSummary = await response.json()
 
+                this.counter = 0
+
                 if (jsonSummary.drinks instanceof Array) {
-                    this.foundDrinks = jsonSummary.drinks
+                    const batchSize = this.batchSize
 
-                    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-                    for (const [index, drink] of this.foundDrinks.entries()) {
-
-                        const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
-                        const jsonDetails = await details.json()
-
-                        this.foundDrinks[index]['instructions'] = jsonDetails.drinks[0]['strInstructions']
-
-                        const pullIngredients = function(arr) {
-                            return Object.entries(arr[0])
-                                .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
-                                .reduce((acc, [k, v]) => {
-                                    const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
-                                    acc[n-1] = {...acc[n-1], [t]:v};
-                                return acc;
-                            }, [])
-                        }
-
-                        this.foundDrinks[index]['ingredients'] = pullIngredients(jsonDetails.drinks)
-
-                        await delay(30)
+                    for (let i = 0; i < jsonSummary.drinks.length; i += batchSize) {
+                        this.foundDrinks.push(jsonSummary.drinks.slice(i, i + batchSize))
                     }
 
-                    this.isLoading = false
+                    this.fetchCocktailDetails(0)
 
                 } else {
                     this.noResults = true
                 }
             },
 
-            loadMore() {
-                if (this.resultsMax > this.foundDrinks.length) {
-                    return
+            async fetchCocktailDetails(count) {
+
+                for (const [index, drink] of this.foundDrinks[count].entries()) {
+                    const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
+
+                    const jsonDetails = await details.json()
+
+                    this.foundDrinks[count][index]['instructions'] = jsonDetails.drinks[0]['strInstructions']
+
+                    const pullIngredients = function(arr) {
+                        return Object.entries(arr[0])
+                            .filter(([k,v]) => k.match(/^str(Ingredient|Measure)\d+$/) && v)
+                            .reduce((acc, [k, v]) => {
+                                const [t, n] = k.match(/^str(Ingredient|Measure)(\d+)$/).slice(1);
+                                acc[n-1] = {...acc[n-1], [t]:v};
+                            return acc;
+                        }, [])
+                    }
+
+                    this.foundDrinks[count][index]['ingredients'] = pullIngredients(jsonDetails.drinks)
                 }
-                this.resultsMax = this.resultsMax + 10
+
+                this.outputDrinks.push(...this.foundDrinks[this.counter])
+                this.isLoading = false
+                this.counter++
             },
+
 
             onBeforeEnter(el) {
                 el.style.opacity = 0
@@ -110,18 +122,18 @@
 
             clear() {
                 this.ingredientsPicked = []
-                this.foundDrinks = []
+                this.outputDrinks = []
             },
 
             deselected() {
                 this.$refs.multiselect.close()
-                this.foundDrinks = []
+                this.outputDrinks = []
             },
         },
 
         computed: {
-            drinks() {
-                return this.foundDrinks.slice(0, this.resultsMax)
+            drinksTotal() {
+                return this.foundDrinks.map(innerArray => innerArray.length).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
             }
         },
 
@@ -130,9 +142,9 @@
         },
 
         watch: {
-            ingredientsPicked(ingredientsPicked) {
-                if (ingredientsPicked.length) {
-                    this.fetchCocktails(...ingredientsPicked)
+            ingredientsPicked(ingredients) {
+                if (ingredients.length) {
+                    this.fetchCocktails(...ingredients)
                 }
             }
         }
@@ -172,11 +184,11 @@
             </div>
         </div>
 
-        <div v-if="foundDrinks.length && !isLoading">
+        <div v-if="this.outputDrinks.length && !isLoading">
             <div class="the-results">
                 <div class="the-results__wrapper">
                     <h2 class="heading the-results__heading">
-                        You could potentially make <span class="the-results__amount">{{ foundDrinks.length }}</span> {{ foundDrinks.length > 1 ? 'cocktails' : 'cocktail' }}
+                        You could potentially make <span class="the-results__amount">{{ drinksTotal }}</span> {{ drinksTotal > 1 ? 'cocktails' : 'cocktail' }}
                     </h2>
                 </div>
                 <div class="the-results__wrapper the-results__wrapper--wide">
@@ -189,9 +201,8 @@
                         class="the-results__list"
                     >
                         <li
-                            v-for="(cocktail, index) in drinks"
+                            v-for="cocktail in this.outputDrinks"
                             :key="cocktail.idDrink"
-                            :data-index="index"
                             class="the-results__listItem"
                         >
                             <div class="card">
@@ -248,7 +259,7 @@
                 </div>
 
                 <div
-                    v-if="this.foundDrinks.length > this.resultsMax"
+                    v-if="this.drinksTotal > this.batchSize"
                     class="the-results__wrapper"
                 >
                     <div class="the-results__loadMore">
@@ -256,11 +267,7 @@
                             @click="loadMore"
                             class="button"
                         >
-                            <span class="button__shadow"></span>
-                            <span class="button__edge"></span>
-                            <span class="button__front">
-                                Load more
-                            </span>
+                            Load more
                         </button>
                     </div>
                 </div>
@@ -278,7 +285,7 @@
         </div>
 
         <div
-            v-else-if="noResults"
+            v-else-if="noResults || !this.ingredientsPicked.length"
             class="the-results"
         >
             <div class="the-results__wrapper">
