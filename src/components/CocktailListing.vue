@@ -1,5 +1,4 @@
 <script>
-    // import 'dotenv/config'
     import Multiselect from '@vueform/multiselect'
     import gsap from 'gsap'
 
@@ -65,7 +64,6 @@
             },
 
             async fetchCocktailDetails(count) {
-
                 for (const [index, drink] of this.foundDrinks[count].entries()) {
                     const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
 
@@ -259,7 +257,7 @@
                 </div>
 
                 <div
-                    v-if="this.drinksTotal > this.batchSize"
+                    v-if="this.outputDrinks.length < this.drinksTotal"
                     class="the-results__wrapper"
                 >
                     <div class="the-results__loadMore">
