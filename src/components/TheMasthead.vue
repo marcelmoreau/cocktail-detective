@@ -1,7 +1,7 @@
 <template>
     <div class="masthead">
         <div class="masthead__body">
-            <a class="brand" href="/">
+            <a class="brand masthead__brand" href="/">
                 <div class="brand__body">
                     <div class="brand__visual">
                         <svg class="brand__icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
@@ -14,6 +14,9 @@
                     </div>
                 </div>
             </a>
+            <div class="masthead__tagline">
+                Find out what cocktails you can make based on ingredients you have!
+            </div>
         </div>
     </div>
 </template>

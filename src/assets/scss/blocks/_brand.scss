@@ -6,12 +6,11 @@
     text-decoration: none;
     font-family: $font-family-accent;
     font-size: var(--font-size-lg);
+    font-weight: 600;
 
     &__body {
         align-items: center;
         display: flex;
-        padding-bottom: 0.5em;
-        padding-top: 0.5em;
     }
 
     &__visual {
