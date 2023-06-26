@@ -6,8 +6,9 @@
     --grid-column-gap: var(--grid-gutter-sm);
     --grid-row-gap: var(--grid-gutter-sm);
 
-
-    --grid-columns-full: [full-start] var(--grid-edge) [main-start] repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end] var(--grid-edge) [full-end];
+    --grid-columns-full: [full-start] var(--grid-edge) [main-start]
+        repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end]
+        var(--grid-edge) [full-end];
 
     display: grid;
     column-gap: var(--grid-column-gap, 1.25rem);

@@ -9,13 +9,21 @@
 
     &--error {
         #{$b}__body {
-            background-image: linear-gradient(135deg, rgba($color-error, 40%) 00%, rgba($color-white, 30%) 60%);
+            background-image: linear-gradient(
+                135deg,
+                rgba($color-error, 40%) 00%,
+                rgba($color-white, 30%) 60%
+            );
         }
     }
 
     &--info {
         #{$b}__body {
-            background-image: linear-gradient(135deg, rgba($color-pink, 40%) 00%, rgba($color-white, 30%) 60%);
+            background-image: linear-gradient(
+                135deg,
+                rgba($color-pink, 40%) 00%,
+                rgba($color-white, 30%) 60%
+            );
         }
     }
 
@@ -25,4 +33,3 @@
         }
     }
 }
-

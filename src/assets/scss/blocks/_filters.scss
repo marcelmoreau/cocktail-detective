@@ -17,7 +17,7 @@
     }
 
     &__check {
-        clip: rect(0,0,0,0);
+        clip: rect(0, 0, 0, 0);
         pointer-events: none;
         position: absolute;
     }
@@ -26,8 +26,8 @@
         background-color: $color-space-cadet;
         border-radius: 0.25rem;
         cursor: pointer;
-        display: block;
         font-size: 0.875rem;
+        display: block;
         margin-bottom: 0;
         padding: 0.75em 0.5em;
         transition: 150ms ease-in-out background-color;
@@ -36,5 +36,4 @@
     &__label:hover {
         background-color: adjust-color($color-space-cadet, $lightness: -10%);
     }
-
 }

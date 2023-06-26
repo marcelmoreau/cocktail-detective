@@ -17,7 +17,7 @@
     }
 
     &__copy {
-        font-size: clamp(1rem, calc(0.90rem + 0.44vw), 1.25rem);
+        font-size: clamp(1rem, calc(0.9rem + 0.44vw), 1.25rem);
         grid-column: main;
     }
 
@@ -37,7 +37,6 @@
     }
 
     &__headingLabel {
-
     }
 
     &__grid {

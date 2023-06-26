@@ -1,11 +1,16 @@
 .meta {
     $b: &;
 
-    --meta-font-size: .925rem;
+    --meta-font-size: 0.925rem;
     --meta-line-height: var(--body-line-height);
-    --meta-baseline-distance: calc(var(--meta-font-size) * var(--meta-line-height));
+    --meta-baseline-distance: calc(
+        var(--meta-font-size) * var(--meta-line-height)
+    );
     --meta-separator-size: 5px;
-    --meta-separator-offset: calc((var(--meta-baseline-distance) * 0.5) - (var(--meta-separator-size) * 0.5));
+    --meta-separator-offset: calc(
+        (var(--meta-baseline-distance) * 0.5) -
+            (var(--meta-separator-size) * 0.5)
+    );
 
     display: flex;
     font-family: var(--font-family-monospace);

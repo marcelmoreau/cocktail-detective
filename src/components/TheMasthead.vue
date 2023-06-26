@@ -15,7 +15,7 @@
                 </div>
             </a>
             <div class="masthead__tagline">
-                Find out what cocktails you can make based on ingredients you have!
+                Discover what cocktails you can make based on ingredients you have.
             </div>
         </div>
     </div>

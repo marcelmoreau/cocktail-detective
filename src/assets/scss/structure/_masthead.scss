@@ -23,7 +23,6 @@
         @include at(lg) {
             grid-column: auto / span 4;
         }
-
     }
 
     &__tagline {
@@ -33,9 +32,4 @@
             grid-column: auto / span 8;
         }
     }
-
-
-
-
 }
-
