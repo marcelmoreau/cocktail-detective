@@ -4,8 +4,8 @@
     color: var(--body-color);
     display: block;
     text-decoration: none;
-    font-family: $font-family-accent;
-    font-size: var(--font-size-lg);
+    font-family: var(--font-family-accent);
+    font-size: var(--step-2);
     font-weight: 600;
 
     &__body {

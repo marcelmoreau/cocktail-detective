@@ -1,26 +1,25 @@
 .button {
-    $b: &;
-
-    background-color: var(--color-pine-green);
+    background-color: var(--color-pink);
     border: 0;
     border-radius: 0.25rem;
     color: var(--color-white);
     cursor: pointer;
     display: inline-block;
     font-family: inherit;
-    font-size: var(--step-base);
+    font-size: var(--step--1);
     font-weight: 700;
     padding: 0.75em 1.25em;
     text-align: center;
-    text-shadow: 1px 1px 0 var(--color-gray-900);
+    text-shadow: 1px 1px 0 var(--color-gray-800);
+    transition: background-color 200ms ease-in-out;
     vertical-align: top;
 
     &:hover {
-        background-color: #014a51;
+        background-color: var(--color-amaranth);
     }
 
     &:active {
-        background-color: #02373c;
+        background-image:linear-gradient(to bottom, transparent 0%, scale-color($color-amaranth, $blackness: 20%) 0%)
     }
 
     &:focus:not(:focus-visible) {

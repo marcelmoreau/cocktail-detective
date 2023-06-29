@@ -7,7 +7,7 @@
     &__amount {
         text-decoration: underline;
         text-underline-offset: 0.275em;
-        text-decoration-color: var(--color-pink);
+        text-decoration-color: var(--color-gray-400);
         text-decoration-thickness: 0.125em;
     }
 
@@ -42,11 +42,7 @@
         background-color: var(--color-mischka);
         border: 0.25rem dotted var(--color-gray-300);
         font-size: var(--step--1);
-        padding-bottom: var(--space-m);
-        padding-left: var(--space-m);
-        padding-right: var(--space-m);
-        padding-top: var(--space-m);
-        position: relative;
+        padding: var(--space-m);
         text-align: center;
 
         @include at(lg) {

@@ -1,42 +1,15 @@
 .site {
-    $b: &;
-
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
 
     &__footer {
-        display: flex;
-        align-items: center;
-        font-size: var(--step--2);
-        justify-content: center;
+        font-size: var(--step--1);
         margin-bottom: var(--space-2xs);
         margin-top: auto;
-        padding-top: var(--space-2xs);
-        text-align: center;
-    }
-
-    &__footerWrapper {
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         padding-left: var(--grid-gutter-sm);
         padding-right: var(--grid-gutter-sm);
-    }
-
-    &__footerIcon {
-        display: block;
-        margin-left: 0.75em;
-        margin-right: 0.75em;
-        height: 1.125em;
-    }
-
-    &__footerLink {
-        font-weight: 400;
-    }
-
-    &__footerIconGlass {
-        fill: var(--color-gray-400);
+        padding-top: var(--space-2xs);
+        text-align: center;
     }
 }

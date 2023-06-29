@@ -21,14 +21,23 @@
         grid-column: span 12;
 
         @include at(lg) {
+            grid-column: auto / span 5;
+        }
+
+        @include at(xl) {
             grid-column: auto / span 4;
         }
     }
 
     &__tagline {
+        font-size: var(--step--1);
         grid-column: span 12;
 
         @include at(lg) {
+            grid-column: auto / span 7;
+        }
+
+        @include at(xl) {
             grid-column: auto / span 8;
         }
     }

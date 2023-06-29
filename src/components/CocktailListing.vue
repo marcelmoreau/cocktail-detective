@@ -170,10 +170,10 @@ export default {
 
 <template>
     <div class="cocktails">
-        <div class="form the-form">
+        <div class="the-form">
             <div class="the-form__wrapper">
-                <div class="form__field the-form__formField">
-                    <label class="form__label the-form__label" for="form">
+                <div class="the-form__formField">
+                    <label class="the-form__label" for="form">
                         What ingredients do you have?
                     </label>
                     <Multiselect
