@@ -28,12 +28,16 @@ export default {
 
     methods: {
         async getIngredients() {
-            const response = await fetch(
-                `${API_URL}/${API_KEY}/list.php?i=list`
-            );
-            const json = await response.json();
+            try {
+                const response = await fetch(
+                    `${API_URL}/${API_KEY}/list.php?i=list`
+                );
+                const json = await response.json();
 
-            this.ingredientsList = json.drinks.map((obj) => obj.strIngredient1);
+                this.ingredientsList = json.drinks.map((obj) => obj.strIngredient1);
+            } catch (error) {
+                console.error("Error occurred while fetching ingredients:", error);
+            }
         },
 
         loadMore() {
@@ -46,62 +50,71 @@ export default {
             this.foundDrinks = [];
             this.outputDrinks = [];
 
-            const response = await fetch(
-                `${API_URL}/${API_KEY}/filter.php?i=${ingredients}`
-            );
-            const jsonSummary = await response.json();
+            try {
+                const response = await fetch(
+                    `${API_URL}/${API_KEY}/filter.php?i=${ingredients}`
+                );
+                const jsonSummary = await response.json();
 
-            this.counter = 0;
+                this.counter = 0;
 
-            if (jsonSummary.drinks instanceof Array) {
-                const batchSize = this.batchSize;
+                if (jsonSummary.drinks instanceof Array) {
+                    const batchSize = this.batchSize;
 
-                for (let i = 0; i < jsonSummary.drinks.length; i += batchSize) {
-                    this.foundDrinks.push(
-                        jsonSummary.drinks.slice(i, i + batchSize)
-                    );
+                    for (let i = 0; i < jsonSummary.drinks.length; i += batchSize) {
+                        this.foundDrinks.push(
+                            jsonSummary.drinks.slice(i, i + batchSize)
+                        );
+                    }
+
+                    this.fetchCocktailDetails(0);
+                } else {
+                    this.noResults = true;
                 }
 
-                this.fetchCocktailDetails(0);
-            } else {
-                this.noResults = true;
+            } catch (error) {
+                console.error("Error occurred while fetching cocktails:", error);
             }
         },
 
         async fetchCocktailDetails(count) {
-            for (const [index, drink] of this.foundDrinks[count].entries()) {
-                const details = await fetch(
-                    `${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`
-                );
+            try {
+                for (const [index, drink] of this.foundDrinks[count].entries()) {
+                    const details = await fetch(
+                        `${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`
+                    );
 
-                const jsonDetails = await details.json();
+                    const jsonDetails = await details.json();
 
-                this.foundDrinks[count][index]["instructions"] =
-                    jsonDetails.drinks[0]["strInstructions"];
+                    this.foundDrinks[count][index]["instructions"] =
+                        jsonDetails.drinks[0]["strInstructions"];
 
-                const pullIngredients = function (arr) {
-                    return Object.entries(arr[0])
-                        .filter(
-                            ([k, v]) =>
-                                k.match(/^str(Ingredient|Measure)\d+$/) && v
-                        )
-                        .reduce((acc, [k, v]) => {
-                            const [t, n] = k
-                                .match(/^str(Ingredient|Measure)(\d+)$/)
-                                .slice(1);
-                            acc[n - 1] = { ...acc[n - 1], [t]: v };
-                            return acc;
-                        }, []);
-                };
+                    const pullIngredients = function (arr) {
+                        return Object.entries(arr[0])
+                            .filter(
+                                ([k, v]) =>
+                                    k.match(/^str(Ingredient|Measure)\d+$/) && v
+                            )
+                            .reduce((acc, [k, v]) => {
+                                const [t, n] = k
+                                    .match(/^str(Ingredient|Measure)(\d+)$/)
+                                    .slice(1);
+                                acc[n - 1] = { ...acc[n - 1], [t]: v };
+                                return acc;
+                            }, []);
+                    };
 
-                this.foundDrinks[count][index]["ingredients"] = pullIngredients(
-                    jsonDetails.drinks
-                );
+                    this.foundDrinks[count][index]["ingredients"] = pullIngredients(
+                        jsonDetails.drinks
+                    );
+                }
+
+                this.outputDrinks.push(...this.foundDrinks[this.counter]);
+                this.isLoading = false;
+                this.counter++;
+            } catch (error) {
+                console.error("Error occurred while fetching cocktail details:", error);
             }
-
-            this.outputDrinks.push(...this.foundDrinks[this.counter]);
-            this.isLoading = false;
-            this.counter++;
         },
 
         onBeforeEnter(el) {
