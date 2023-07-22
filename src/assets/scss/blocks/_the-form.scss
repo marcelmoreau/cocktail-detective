@@ -1,7 +1,7 @@
 .the-form {
     $b: &;
 
-    --ms-font-size: var(--step--1);
+    --ms-font-size: 1rem;
     --ms-line-height: var(--body-line-height);
     --ms-bg: var(--color-white);
     --ms-bg-disabled: var(--color-gray-200);
@@ -20,6 +20,7 @@
     --ms-clear-color: var(--color-amaranth);
     --ms-clear-color-hover: var(--body-color);
 
+    --ms-tag-font-size: 1rem;
     --ms-tag-font-size: 100%;
     --ms-tag-line-height: 1.25;
     --ms-tag-font-weight: 400;
