@@ -1,7 +1,7 @@
 <script setup>
-    import CocktailListing from '@/components/CocktailListing.vue'
+import CocktailListing from '@/components/CocktailListing.vue'
 </script>
 
 <template>
-    <CocktailListing />
+  <CocktailListing />
 </template>
