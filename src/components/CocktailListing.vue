@@ -14,7 +14,7 @@
             :searchable="true"
             :options="ingredientsList"
             :classes="multiselectClasses"
-            ref="multiselect"
+            ref="multiselectForm"
             class="the-form__control the-form__control--select"
             id="form"
           >
@@ -137,6 +137,7 @@ const counter = ref(0)
 const batchSize = ref(10)
 const noResults = ref(false)
 const ingredientsList = ref([])
+const multiselectForm = ref(null)
 const multiselectClasses = {
   option: 'multiselect-option the-form__option',
   tagRemove: 'multiselect-tag-remove the-form__tagRemove',
@@ -254,7 +255,7 @@ function clear() {
 }
 
 function deselected() {
-  $refs.multiselect.close()
+  multiselectForm.value.close()
   outputDrinks.value = []
 }
 
