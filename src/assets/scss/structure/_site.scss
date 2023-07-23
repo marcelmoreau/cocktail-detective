@@ -4,6 +4,9 @@
     min-height: 100dvh;
 
     &__footer {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--space-3xs);
         font-size: var(--step--1);
         margin-bottom: var(--space-2xs);
         margin-top: auto;
@@ -11,5 +14,12 @@
         padding-right: var(--grid-gutter-sm);
         padding-top: var(--space-2xs);
         text-align: center;
-    }
+      }
+
+      &__footerItem {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--space-xs);
+        text-align: left;
+      }
 }

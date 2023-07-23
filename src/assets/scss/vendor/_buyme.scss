@@ -1,0 +1,15 @@
+a.bmc-btn {
+  border-radius: 0.25rem;
+  font-family: var(--font-family-monospace) !important;
+  font-size: var(--step--1);
+  font-weight: normal;
+  height: auto;
+  letter-spacing: var(--body-line-height);
+  line-height: 1.4;
+  padding: 0.75em 1.25em;
+  transition: background-color 200ms ease-in-out;
+}
+a.bmc-btn:hover {
+  background-color: #f1d205 !important;
+  color: var(--body-color);
+}
