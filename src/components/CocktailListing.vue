@@ -49,10 +49,10 @@
               <div class="card">
                 <div class="card__body">
                   <div class="card__wrapper">
-                    <div class="card__media">
-                        <div class="card__mediaWrapper">
+                    <div class="card__asset">
+                      <div class="card__media">
                           <img :src="cocktail.strDrinkThumb" alt="" class="card__image" loading="lazy" />
-                        </div>
+                      </div>
                     </div>
                     <div class="card__content">
                       <div class="card__header">
