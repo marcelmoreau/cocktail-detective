@@ -50,7 +50,9 @@
                 <div class="card__body">
                   <div class="card__wrapper">
                     <div class="card__media">
-                      <img :src="cocktail.strDrinkThumb" alt="" class="card__image" loading="lazy" />
+                        <div class="card__mediaWrapper">
+                          <img :src="cocktail.strDrinkThumb" alt="" class="card__image" loading="lazy" />
+                        </div>
                     </div>
                     <div class="card__content">
                       <div class="card__header">
@@ -161,6 +163,7 @@ async function getIngredients() {
 
 async function fetchCocktails(...ingredients) {
   isLoading.value = true
+  noResults.value = false
 
   foundDrinks.value = []
   outputDrinks.value = []
@@ -180,6 +183,7 @@ async function fetchCocktails(...ingredients) {
 
       fetchCocktailDetails(0)
     } else {
+      isLoading.value = false
       noResults.value = true
     }
   } catch (error) {
