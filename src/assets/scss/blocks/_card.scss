@@ -36,8 +36,10 @@
     }
 
     &__media {
-      aspect-ratio: 6 / 5;
-      display: contents;
+      @extend %grid;
+
+      --grid-column-gap: 0;
+
       text-align: center;
 
       @include at(sm) {
@@ -46,6 +48,7 @@
     }
 
     &__image {
+        aspect-ratio: 1;
         clip-path: polygon(12% 0, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 12%);
         grid-column: 2 / span 10;
 

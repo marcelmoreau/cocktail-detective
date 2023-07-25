@@ -51,7 +51,7 @@
                   <div class="card__wrapper">
                     <div class="card__asset">
                       <div class="card__media">
-                          <img :src="cocktail.strDrinkThumb" alt="" class="card__image" loading="lazy" />
+                          <img :src="cocktail.strDrinkThumb" alt="" class="card__image" height="640" loading="lazy" width="640" />
                       </div>
                     </div>
                     <div class="card__content">
@@ -89,7 +89,10 @@
 
         <div v-if="outputDrinks.length < drinksTotal" class="the-results__wrapper">
           <div class="the-results__loadMore">
-            <button @click="loadMore" class="button">Load more</button>
+            <button @click="loadMore" class="button" :disabled="isLoadingButton">
+              Load more
+              <svg v-if="isLoadingButton" class="button__loading" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -132,6 +135,7 @@ const API_URL = 'https://www.thecocktaildb.com/api/json/v2'
 const API_KEY = import.meta.env.VITE_COCKTAIL_API_KEY
 
 const isLoading = ref(false)
+const isLoadingButton = ref(false)
 const ingredientsPicked = ref([])
 const foundDrinks = ref([])
 const outputDrinks = ref([])
@@ -192,6 +196,7 @@ async function fetchCocktails(...ingredients) {
 }
 
 async function fetchCocktailDetails(count) {
+  isLoadingButton.value = true
   try {
     for (const [index, drink] of foundDrinks.value[count].entries()) {
       const details = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${drink.idDrink}`)
@@ -215,6 +220,7 @@ async function fetchCocktailDetails(count) {
 
     outputDrinks.value.push(...foundDrinks.value[counter.value])
     isLoading.value = false
+    isLoadingButton.value = false
     counter.value++
   } catch (error) {
     console.error('Error occurred while fetching cocktail details:', error)
