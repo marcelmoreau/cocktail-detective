@@ -1,105 +1,105 @@
 .card {
-    $b: &;
+  $b: &;
+
+  height: 100%;
+
+  &__body {
+    background-color: var(--color-white);
+    height: 100%;
+  }
+
+  &__wrapper {
+    @extend %grid;
+
+    --grid-custom-columns: repeat(var(--grid-column-count), minmax(0, 1fr));
+    --grid-row-gap: 0;
 
     height: 100%;
+  }
 
-    &__body {
-        background-color: var(--color-white);
-        height: 100%;
+  &__asset {
+    @extend %grid;
+
+    --grid-column-gap: 0;
+
+    align-items: center;
+    background-image: radial-gradient(
+    var(--color-amaranth) 0.9px,
+    var(--color-pink) 0.9px
+    );
+    background-size: 18px 18px;
+    grid-column: span 12;
+
+    @include at(sm) {
+      grid-column: auto / span 5;
     }
+  }
 
-    &__wrapper {
-        @extend %grid;
+  &__media {
+    @extend %grid;
 
-        --grid-custom-columns: repeat(var(--grid-column-count), minmax(0, 1fr));
-        --grid-row-gap: 0;
+    --grid-column-gap: 0;
 
-        height: 100%;
+    text-align: center;
+
+    @include at(sm) {
+      aspect-ratio: 1 / 1;
     }
+  }
 
-    &__asset {
-        @extend %grid;
+  &__image {
+    aspect-ratio: 1;
+    clip-path: polygon(12% 0, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 12%);
+    grid-column: 2 / span 10;
 
-        --grid-column-gap: 0;
-
-        align-items: center;
-        background-image: radial-gradient(
-            var(--color-amaranth) 0.9px,
-            var(--color-pink) 0.9px
-        );
-        background-size: 18px 18px;
-        grid-column: span 12;
-
-        @include at(sm) {
-            grid-column: auto / span 5;
-        }
+    @include at(sm) {
+      grid-column: 1 / -1;
     }
+  }
 
-    &__media {
-      @extend %grid;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 12;
+    padding: var(--space-m);
+    row-gap: var(--space-m);
 
-      --grid-column-gap: 0;
-
-      text-align: center;
-
-      @include at(sm) {
-        aspect-ratio: 1 / 1;
-      }
+    @include at(sm) {
+      grid-column: auto / span 7;
+      padding-left: 0;
     }
+  }
 
-    &__image {
-        aspect-ratio: 1;
-        clip-path: polygon(12% 0, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 12%);
-        grid-column: 2 / span 10;
+  &__heading {
+    @extend %heading;
 
-        @include at(sm) {
-            grid-column: 1 / -1;
-        }
-    }
+    font-size: var(--step-1);
+    margin-bottom: 0;
+  }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        grid-column: span 12;
-        padding: var(--space-m);
-        row-gap: var(--space-m);
+  &__torso {
+    display: grid;
+    row-gap: var(--space-m);
+  }
 
-        @include at(sm) {
-            grid-column: auto / span 7;
-            padding-left: 0;
-        }
-    }
+  &__subheading {
+    @extend %heading;
 
-    &__heading {
-        @extend %heading;
+    --heading-font-family: var(--font-family-monospace);
+    --heading-font-weight: 600;
 
-        font-size: var(--step-1);
-        margin-bottom: 0;
-    }
+    font-size: var(--step--1);
+    letter-spacing: 0.0175em;
+    margin-bottom: 0.625em;
+    text-transform: uppercase;
+  }
 
-    &__torso {
-        display: grid;
-        row-gap: var(--space-m);
-    }
+  &__list {
+    display: grid;
+    row-gap: 0.325rem;
+  }
 
-    &__subheading {
-        @extend %heading;
-
-        --heading-font-family: var(--font-family-monospace);
-        --heading-font-weight: 600;
-
-        font-size: var(--step--1);
-        letter-spacing: 0.0175em;
-        margin-bottom: 0.625em;
-        text-transform: uppercase;
-    }
-
-    &__list {
-        display: grid;
-        row-gap: 0.325rem;
-    }
-
-    &__listItemUnit {
-        margin-right: 0.5ch;
-    }
+  &__listItemUnit {
+    margin-right: 0.5ch;
+  }
 }

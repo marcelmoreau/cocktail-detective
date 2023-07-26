@@ -1,54 +1,54 @@
 @keyframes headShake {
-    0% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
 
-    6.5% {
-        transform: translateX(-4px) rotateY(-9deg);
-    }
+  6.5% {
+    transform: translateX(-4px) rotateY(-9deg);
+  }
 
-    18.5% {
-        transform: translateX(3px) rotateY(7deg);
-    }
+  18.5% {
+    transform: translateX(3px) rotateY(7deg);
+  }
 
-    31.5% {
-        transform: translateX(-2px) rotateY(-5deg);
-    }
+  31.5% {
+    transform: translateX(-2px) rotateY(-5deg);
+  }
 
-    43.5% {
-        transform: translateX(1px) rotateY(3deg);
-    }
+  43.5% {
+    transform: translateX(1px) rotateY(3deg);
+  }
 
-    50% {
-        transform: translateX(0);
-    }
+  50% {
+    transform: translateX(0);
+  }
 }
 
 .loading {
-    $b: &;
+  $b: &;
 
-    text-align: center;
+  text-align: center;
 
-    #{$b}__loader {
-        max-width: 100dvw;
+  #{$b}__loader {
+    max-width: 100dvw;
 
-        @include at(sm) {
-            height: 50dvh;
-        }
+    @include at(sm) {
+      height: 50dvh;
     }
+  }
 
-    #{$b}__loaderMatte {
-        backdrop-filter: blur(2.8px);
-        fill: var(--color-gray-500);
-        opacity: 0.375;
-    }
+  #{$b}__loaderMatte {
+    backdrop-filter: blur(2.8px);
+    fill: var(--color-gray-500);
+    opacity: 0.375;
+  }
 
-    #{$b}__loaderParts {
-        animation-duration: 2.5s;
-        animation-iteration-count: infinite;
-        animation-name: headShake;
-        animation-timing-function: ease-in-out;
-        fill: var(--color-white);
-        opacity: 0.7755;
-    }
+  #{$b}__loaderParts {
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-name: headShake;
+    animation-timing-function: ease-in-out;
+    fill: var(--color-white);
+    opacity: 0.7755;
+  }
 }

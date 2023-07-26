@@ -1,26 +1,26 @@
 %grid {
-    --grid-column-count: 12;
-    --grid-edge: 0;
-    --grid-max-width: #{$container};
+  --grid-column-count: 12;
+  --grid-edge: 0;
+  --grid-max-width: #{$container};
 
-    --grid-column-gap: var(--grid-gutter-sm);
-    --grid-row-gap: var(--grid-gutter-sm);
+  --grid-column-gap: var(--grid-gutter-sm);
+  --grid-row-gap: var(--grid-gutter-sm);
 
-    --grid-columns-full: [full-start] var(--grid-edge) [main-start]
-        repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end]
-        var(--grid-edge) [full-end];
+  --grid-columns-full: [full-start] var(--grid-edge) [main-start]
+  repeat(var(--grid-column-count), minmax(0, 1fr)) [main-end]
+  var(--grid-edge) [full-end];
 
-    display: grid;
-    column-gap: var(--grid-column-gap, 1.25rem);
-    grid-template-columns: var(--grid-custom-columns, var(--grid-columns-full));
-    grid-template-rows: auto;
-    row-gap: var(--grid-row-gap, 1.25rem);
+  display: grid;
+  column-gap: var(--grid-column-gap, 1.25rem);
+  grid-template-columns: var(--grid-custom-columns, var(--grid-columns-full));
+  grid-template-rows: auto;
+  row-gap: var(--grid-row-gap, 1.25rem);
 
-    & > * {
-        grid-column: main;
-    }
+  & > * {
+    grid-column: main;
+  }
 
-    @include at(xxl) {
-        --grid-edge: calc((100vw - var(--grid-max-width)) * 0.5);
-    }
+  @include at(xxl) {
+    --grid-edge: calc((100vw - var(--grid-max-width)) * 0.5);
+  }
 }

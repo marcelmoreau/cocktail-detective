@@ -1,44 +1,44 @@
 .masthead {
+  @extend %grid;
+
+  $b: &;
+
+  border-bottom: 1px solid var(--color-gray-300);
+  padding-bottom: var(--space-s);
+  padding-top: var(--space-s);
+
+  &__body {
     @extend %grid;
 
-    $b: &;
+    --grid-custom-columns: repeat(var(--grid-column-count), minmax(0, 1fr));
+    --grid-row-gap: 0.625rem;
 
-    border-bottom: 1px solid var(--color-gray-300);
-    padding-bottom: var(--space-s);
-    padding-top: var(--space-s);
+    align-items: center;
+    grid-column: main;
+  }
 
-    &__body {
-        @extend %grid;
+  &__brand {
+    grid-column: span 12;
 
-        --grid-custom-columns: repeat(var(--grid-column-count), minmax(0, 1fr));
-        --grid-row-gap: 0.625rem;
-
-        align-items: center;
-        grid-column: main;
+    @include at(lg) {
+      grid-column: auto / span 5;
     }
 
-    &__brand {
-        grid-column: span 12;
+    @include at(xl) {
+      grid-column: auto / span 4;
+    }
+  }
 
-        @include at(lg) {
-            grid-column: auto / span 5;
-        }
+  &__tagline {
+    font-size: var(--step--1);
+    grid-column: span 12;
 
-        @include at(xl) {
-            grid-column: auto / span 4;
-        }
+    @include at(lg) {
+      grid-column: auto / span 7;
     }
 
-    &__tagline {
-        font-size: var(--step--1);
-        grid-column: span 12;
-
-        @include at(lg) {
-            grid-column: auto / span 7;
-        }
-
-        @include at(xl) {
-            grid-column: auto / span 8;
-        }
+    @include at(xl) {
+      grid-column: auto / span 8;
     }
+  }
 }

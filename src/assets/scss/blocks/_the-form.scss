@@ -1,110 +1,110 @@
 .the-form {
-    $b: &;
+  $b: &;
 
-    --ms-font-size: 1rem;
-    --ms-line-height: var(--body-line-height);
-    --ms-bg: var(--color-white);
-    --ms-bg-disabled: var(--color-gray-200);
-    --ms-border-color: var(--color-half-baked);
-    --ms-border-width: 0.175rem;
-    --ms-radius: 0.25rem;
-    --ms-py: 0.75em;
-    --ms-px: 0.5em;
-    --ms-ring-width: 2px;
-    --ms-ring-color: var(--color-pink);
-    --ms-placeholder-color: #9ca3af;
-    --ms-max-height: 10rem;
+  --ms-font-size: 1rem;
+  --ms-line-height: var(--body-line-height);
+  --ms-bg: var(--color-white);
+  --ms-bg-disabled: var(--color-gray-200);
+  --ms-border-color: var(--color-half-baked);
+  --ms-border-width: 0.175rem;
+  --ms-radius: 0.25rem;
+  --ms-py: 0.75em;
+  --ms-px: 0.5em;
+  --ms-ring-width: 2px;
+  --ms-ring-color: var(--color-pink);
+  --ms-placeholder-color: #9ca3af;
+  --ms-max-height: 10rem;
 
-    --ms-spinner-color: #10b981;
-    --ms-caret-color: var(--body-color);
-    --ms-clear-color: var(--color-amaranth);
-    --ms-clear-color-hover: var(--body-color);
+  --ms-spinner-color: #10b981;
+  --ms-caret-color: var(--body-color);
+  --ms-clear-color: var(--color-amaranth);
+  --ms-clear-color-hover: var(--body-color);
 
-    --ms-tag-font-size: 1rem;
-    --ms-tag-font-size: 100%;
-    --ms-tag-line-height: 1.25;
-    --ms-tag-font-weight: 400;
-    --ms-tag-bg: var(--body-color);
-    --ms-tag-bg-disabled: var(--color-gray-200);
-    --ms-tag-color: var(--color-white);
-    --ms-tag-color-disabled: var(--body-color);
-    --ms-tag-radius: 0.25rem;
-    --ms-tag-py: 0.25em;
-    --ms-tag-px: 0.5em;
-    --ms-tag-my: 0.25em;
-    --ms-tag-mx: 0.5em;
+  --ms-tag-font-size: 1rem;
+  --ms-tag-font-size: 100%;
+  --ms-tag-line-height: 1.25;
+  --ms-tag-font-weight: 400;
+  --ms-tag-bg: var(--body-color);
+  --ms-tag-bg-disabled: var(--color-gray-200);
+  --ms-tag-color: var(--color-white);
+  --ms-tag-color-disabled: var(--body-color);
+  --ms-tag-radius: 0.25rem;
+  --ms-tag-py: 0.25em;
+  --ms-tag-px: 0.5em;
+  --ms-tag-my: 0.25em;
+  --ms-tag-mx: 0.5em;
 
-    --ms-tag-remove-radius: 0.125rem;
-    --ms-tag-remove-py: 0.25em;
-    --ms-tag-remove-px: 0.25em;
-    --ms-tag-remove-my: 0;
-    --ms-tag-remove-mx: 0.25em;
+  --ms-tag-remove-radius: 0.125rem;
+  --ms-tag-remove-py: 0.25em;
+  --ms-tag-remove-px: 0.25em;
+  --ms-tag-remove-my: 0;
+  --ms-tag-remove-mx: 0.25em;
 
-    --ms-dropdown-bg: var(--color-white);
-    --ms-dropdown-border-color: var(--color-gray-200);
-    --ms-dropdown-border-width: 1px;
-    --ms-dropdown-radius: 0;
+  --ms-dropdown-bg: var(--color-white);
+  --ms-dropdown-border-color: var(--color-gray-200);
+  --ms-dropdown-border-width: 1px;
+  --ms-dropdown-radius: 0;
 
-    --ms-option-font-size: 1rem;
-    --ms-option-line-height: 1.375;
-    --ms-option-bg-pointed: var(--color-white);
-    --ms-option-color-pointed: #1f2937;
-    --ms-option-bg-selected: var(--color-pine-green);
-    --ms-option-color-selected: var(--color-white);
-    --ms-option-bg-disabled: var(--color-white);
-    --ms-option-color-disabled: var(--color-gray-300);
-    --ms-option-bg-selected-pointed: var(--color-half-baked);
-    --ms-option-color-selected-pointed: var(--color-white);
-    --ms-option-bg-selected-disabled: var(--color-white);
-    --ms-option-color-selected-disabled: #d1fae5;
-    --ms-option-py: 0.5rem;
-    --ms-option-px: 0.75rem;
+  --ms-option-font-size: 1rem;
+  --ms-option-line-height: 1.375;
+  --ms-option-bg-pointed: var(--color-white);
+  --ms-option-color-pointed: #1f2937;
+  --ms-option-bg-selected: var(--color-pine-green);
+  --ms-option-color-selected: var(--color-white);
+  --ms-option-bg-disabled: var(--color-white);
+  --ms-option-color-disabled: var(--color-gray-300);
+  --ms-option-bg-selected-pointed: var(--color-half-baked);
+  --ms-option-color-selected-pointed: var(--color-white);
+  --ms-option-bg-selected-disabled: var(--color-white);
+  --ms-option-color-selected-disabled: #d1fae5;
+  --ms-option-py: 0.5rem;
+  --ms-option-px: 0.75rem;
 
-    --ms-empty-color: #4b5563;
+  --ms-empty-color: #4b5563;
 
-    margin-top: var(--space-l);
+  margin-top: var(--space-l);
 
-    &__wrapper {
-        @extend %grid;
+  &__wrapper {
+    @extend %grid;
+  }
+
+  &__label {
+    @extend %heading;
+
+    display: block;
+    font-size: var(--step-1);
+    margin-bottom: var(--space-xs);
+  }
+
+  &__option:hover {
+    background-color: var(--color-gray-300);
+  }
+
+  &__tagRemove {
+    background-color: var(--color-gray-700);
+  }
+
+  &__tagRemove:hover {
+    background-color: var(--color-gray-600);
+  }
+
+  &__control--select {
+    &.is-open #{$b}__caret {
+      transform: translateY(-0.125em);
     }
-
-    &__label {
-        @extend %heading;
-
-        display: block;
-        font-size: var(--step-1);
-        margin-bottom: var(--space-xs);
+    &:hover #{$b}__caret {
+      transform: translateY(-0.125em);
     }
+  }
 
-    &__option:hover {
-        background-color: var(--color-gray-300);
-    }
-
-    &__tagRemove {
-        background-color: var(--color-gray-700);
-    }
-
-    &__tagRemove:hover {
-        background-color: var(--color-gray-600);
-    }
-
-    &__control--select {
-        &.is-open #{$b}__caret {
-            transform: translateY(-0.125em);
-        }
-        &:hover #{$b}__caret {
-            transform: translateY(-0.125em);
-        }
-    }
-
-    &__caret {
-        fill: none;
-        height: 1.125em;
-        stroke: currentColor;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-width: 0.125rem;
-        transition: transform 250ms ease-in-out;
-        width: 2.5em;
-    }
+  &__caret {
+    fill: none;
+    height: 1.125em;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 0.125rem;
+    transition: transform 250ms ease-in-out;
+    width: 2.5em;
+  }
 }
