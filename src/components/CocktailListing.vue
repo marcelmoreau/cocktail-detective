@@ -129,6 +129,7 @@
 <script setup>
 import Multiselect from '@vueform/multiselect'
 import gsap from 'gsap'
+import { blacklist } from '@/util/blacklist.js'
 import { ref, onMounted, watch, computed } from 'vue'
 
 const API_URL = 'https://www.thecocktaildb.com/api/json/v2'
@@ -155,11 +156,18 @@ const drinksTotal = computed(() => {
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 })
 
-async function getIngredients() {
+function filterArr(arr, omittedIngredients) {
+  return arr.filter((ingredient) => !omittedIngredients.includes(ingredient))
+}
+
+async function fetchIngredientsList() {
   try {
     const response = await fetch(`${API_URL}/${API_KEY}/list.php?i=list`)
     const json = await response.json()
-    ingredientsList.value = json.drinks.map((obj) => obj.strIngredient1)
+
+    const ingredients = json.drinks.map((obj) => obj.strIngredient1)
+
+    ingredientsList.value = filterArr(ingredients, blacklist)
   } catch (error) {
     console.error('Error occurred while fetching ingredients:', error)
   }
@@ -259,6 +267,7 @@ function trimTrailingSpace(str) {
   }
 }
 
+
 function clear() {
   ingredientsPicked.value = []
   outputDrinks.value = []
@@ -270,7 +279,7 @@ function deselected() {
 }
 
 onMounted(() => {
-  getIngredients()
+  fetchIngredientsList()
 })
 
 watch(ingredientsPicked, (ingredients) => {
