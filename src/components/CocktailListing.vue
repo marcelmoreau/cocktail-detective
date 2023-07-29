@@ -278,13 +278,27 @@ function deselected() {
   outputDrinks.value = []
 }
 
+function loadIngredientsFromLocalStorage() {
+  const storedIngredients = window.localStorage.getItem('ingredientsPicked')
+
+  if (storedIngredients) {
+    ingredientsPicked.value = JSON.parse(storedIngredients)
+  }
+}
+
+function saveIngredientsToLocalStorage() {
+  window.localStorage.setItem('ingredientsPicked', JSON.stringify(ingredientsPicked.value))
+}
+
 onMounted(() => {
   fetchIngredientsList()
+  loadIngredientsFromLocalStorage()
 })
 
 watch(ingredientsPicked, (ingredients) => {
   if (ingredients.length) {
     fetchCocktails(...ingredients)
+    saveIngredientsToLocalStorage()
   }
 })
 </script>
