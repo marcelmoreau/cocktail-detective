@@ -81,7 +81,7 @@ export const blacklist = [
   'Mandarin napoleon',
   'Margarita mix',
   'Marjoram leaves',
-  'Marshmellows',
+  'Marshmallows',
   'Martini Bianco',
   'Martini Extra Dry',
   'Melon Vodka',
